@@ -1,0 +1,1 @@
+{"version":"0.0.0","name":"todo_list","dependencies":{"@emotion/react":{"version":"11.11.1"},"@emotion/styled":{"version":"11.11.0"},"axios":{"version":"1.4.0"},"react-dom":{"version":"18.2.0"},"react-query":{"version":"3.39.3"},"react":{"version":"18.2.0"}}}
