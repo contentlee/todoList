@@ -1,5 +1,5 @@
 import { ChangeEvent, HTMLAttributes, useRef } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -12,7 +12,6 @@ const TextArea = ({ label, ...props }: Props) => {
     if (textarea.current) {
       textarea.current.style.height = "auto";
       textarea.current.style.height = textarea.current.scrollHeight + "px";
-      console.log(textarea.current.style.height);
     }
   };
   return (

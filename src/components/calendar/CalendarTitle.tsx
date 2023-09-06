@@ -1,4 +1,4 @@
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props {
   handleOnClick?: (e: React.MouseEvent) => void;

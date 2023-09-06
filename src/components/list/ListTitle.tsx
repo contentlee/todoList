@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   type?: "todo" | "complete" | "hold";
@@ -12,13 +12,20 @@ const ListTitle = ({ type = "todo", children, ...props }: Props) => {
       css={{
         position: "relative",
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
         padding: "8px 16px",
         textAlign: "center",
         backgroundColor: palette.white,
-
-        ...TYPE_VARIANTS[type],
+        ":before, :after": {
+          content: "''",
+          flexGrow: 1,
+          margin: "0 16px",
+          height: "1px",
+          ...TYPE_LINE_VARIANTS[type],
+        },
+        ...TYPE_COLOR_VARIANTS[type],
       }}
       {...props}
     >
@@ -27,7 +34,7 @@ const ListTitle = ({ type = "todo", children, ...props }: Props) => {
   );
 };
 
-const TYPE_VARIANTS = {
+const TYPE_COLOR_VARIANTS = {
   todo: {
     color: palette.gray200,
   },
@@ -36,6 +43,18 @@ const TYPE_VARIANTS = {
   },
   hold: {
     color: palette.sub_purple,
+  },
+};
+
+const TYPE_LINE_VARIANTS = {
+  todo: {
+    background: palette.gray200,
+  },
+  complete: {
+    background: palette.sub_green,
+  },
+  hold: {
+    background: palette.sub_purple,
   },
 };
 

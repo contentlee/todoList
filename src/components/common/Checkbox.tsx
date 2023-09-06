@@ -1,10 +1,10 @@
-import styled from "@emotion/styled";
 import { HTMLAttributes } from "react";
+import styled from "@emotion/styled";
 
-import CheckIcon from "../../assets/check_icon.svg";
-import { palette } from "../../utils/palette";
+import CheckIcon from "@assets/check_icon.svg";
+import { palette } from "@utils/palette";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLInputElement> {
   id: string;
   type?: "primary";
   size?: "medium" | "large";
@@ -37,8 +37,8 @@ const CheckboxWrap = styled.div`
 
 const Checkbox = ({ id, type = "primary", size = "medium", ...props }: Props) => {
   return (
-    <CheckboxWrap {...props}>
-      <input type="checkbox" id={id} />
+    <CheckboxWrap>
+      <input type="checkbox" id={id} {...props} />
       <label
         htmlFor={id}
         css={{

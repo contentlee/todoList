@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
@@ -30,15 +30,6 @@ const Button = ({ variant = "primary", size = "medium", ...props }: Props) => {
 
 const TYPE_VARIANTS = {
   primary: {
-    color: palette.gray600,
-    backgroundColor: palette.white,
-    borderColor: palette.gray600,
-    "&:hover": {
-      color: palette.white,
-      backgroundColor: palette.gray600,
-    },
-  },
-  secondary: {
     color: palette.white,
     backgroundColor: palette.gray600,
     borderColor: palette.white,
@@ -46,6 +37,15 @@ const TYPE_VARIANTS = {
       color: palette.gray600,
       backgroundColor: palette.white,
       borderColor: palette.gray600,
+    },
+  },
+  secondary: {
+    color: palette.gray600,
+    backgroundColor: palette.white,
+    borderColor: palette.gray600,
+    "&:hover": {
+      color: palette.white,
+      backgroundColor: palette.gray600,
     },
   },
 };

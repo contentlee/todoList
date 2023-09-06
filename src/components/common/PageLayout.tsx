@@ -12,14 +12,12 @@ const PageLayout = ({ children, ...props }: Props) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         width: "100%",
         maxWidth: "390px",
         height: "100%",
         padding: "20px",
         paddingBottom: "64px",
         boxSizing: "border-box",
-        overflow: "hidden",
       }}
       {...props}
     >

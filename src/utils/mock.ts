@@ -1,7 +1,7 @@
-export const data = [
+export let data = [
   {
     id: "1",
-    date: "2022-01-03 T13:00:31",
+    date: "2022-01-03",
     title: "양치하기",
     content: "오늘 밤 깨끗한 나의 이를 위해 양치를 한다",
     place: {
@@ -13,10 +13,12 @@ export const data = [
     category: "일상",
     isCompleted: false,
     isHeld: false,
+    writeDate: "2022-01-03 T13:00:00",
+    editDate: "2022-01-03 T13:00:00",
   },
   {
     id: "2",
-    date: "2022-01-03 T13:04:31",
+    date: "2022-01-03",
     title: "밥먹기",
     content: "맛있는 밥을 먹는다",
     place: {
@@ -28,10 +30,12 @@ export const data = [
     category: "일상",
     isCompleted: false,
     isHeld: false,
+    writeDate: "2022-01-03 T13:00:00",
+    editDate: "2022-01-03 T13:00:00",
   },
   {
     id: "3",
-    date: "2022-01-10 T13:00:31",
+    date: "2022-01-10",
     title: "양치하기",
     content: "오늘 밤 깨끗한 나의 이를 위해 양치를 한다",
     place: {
@@ -43,10 +47,12 @@ export const data = [
     category: "일상",
     isCompleted: false,
     isHeld: false,
+    writeDate: "2022-01-03 T13:00:00",
+    editDate: "2022-01-03 T13:00:00",
   },
   {
-    id: "3",
-    date: "2022-01-10 T13:00:31",
+    id: "4",
+    date: "2022-01-10",
     title: "양치하기",
     content: "오늘 밤 깨끗한 나의 이를 위해 양치를 한다",
     place: {
@@ -58,5 +64,7 @@ export const data = [
     category: "일상",
     isCompleted: false,
     isHeld: false,
+    writeDate: "2022-01-03 T13:00:00",
+    editDate: "2022-01-03 T13:00:00",
   },
 ];

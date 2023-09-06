@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -9,6 +9,7 @@ const NavLayout = ({ children }: Props) => {
   return (
     <div
       css={{
+        zIndex: "100",
         position: "fixed",
         bottom: 0,
         display: "flex",

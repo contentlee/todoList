@@ -1,11 +1,11 @@
 import { HTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   type?: "todo" | "complete" | "hold";
 }
 
-const List = ({ type = "todo", ...props }: Props) => {
+const ListItem = ({ type = "todo", ...props }: Props) => {
   return (
     <div
       css={{
@@ -20,7 +20,6 @@ const List = ({ type = "todo", ...props }: Props) => {
         border: "1px solid",
         backgroundColor: palette.white,
         userSelect: "none",
-        cursor: "pointer",
         ...TYPE_VARIANTS[type],
       }}
       {...props}
@@ -34,4 +33,4 @@ const TYPE_VARIANTS = {
   hold: { color: palette.purple, borderColor: palette.purple },
 };
 
-export default List;
+export default ListItem;

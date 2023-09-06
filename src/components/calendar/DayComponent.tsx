@@ -1,4 +1,4 @@
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props {
   children: React.ReactNode;

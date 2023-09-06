@@ -1,8 +1,9 @@
 import { HTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
+  required?: boolean;
   children?: React.ReactNode;
 }
 
@@ -10,6 +11,7 @@ const Input = ({ label, children, ...props }: Props) => {
   return (
     <div
       css={{
+        position: "relative",
         display: "flex",
         alignItems: "center",
         width: "100%",
@@ -44,7 +46,8 @@ const Input = ({ label, children, ...props }: Props) => {
         }}
         {...props}
       ></input>
-      <div>{children}</div>
+
+      {children}
     </div>
   );
 };

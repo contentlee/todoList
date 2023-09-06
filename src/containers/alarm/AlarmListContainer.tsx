@@ -1,4 +1,4 @@
-import { palette } from "../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props {
   date?: string;
@@ -13,7 +13,6 @@ const AlarmListContainer = ({ date, children }: Props) => {
         padding: "20px",
         width: "100%",
         maxWidth: "350px",
-        height: "100%",
         minHeight: "96px",
         borderBottom: `1px solid ${palette.gray100}`,
         "&:hover": {

@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { palette } from "../../utils/palette";
+import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   type: "success" | "error" | "warning" | "alarm";

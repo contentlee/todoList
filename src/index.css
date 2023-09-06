@@ -17,6 +17,7 @@ body {
 }
 
 #root {
+  position: absolute;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -35,4 +36,10 @@ input {
 
 div::-webkit-scrollbar {
   width: 8px;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }

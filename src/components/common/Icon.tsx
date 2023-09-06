@@ -2,7 +2,7 @@ import { ImgHTMLAttributes } from "react";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
-  size?: "small" | "medium" | "large" | "logo_a" | "logo_b" | "add";
+  size?: "small" | "medium" | "large" | "logo_a" | "logo_b" | "logo_c" | "add";
 }
 
 const Icon = ({ src, size = "small", ...props }: Props) => {
@@ -55,6 +55,9 @@ const SIZE_VARIANTS = {
   },
   logo_b: {
     width: "160px",
+  },
+  logo_c: {
+    width: "80px",
   },
 };
 export default Icon;
