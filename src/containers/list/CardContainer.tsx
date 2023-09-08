@@ -4,30 +4,27 @@ import HoldIcon from "@assets/hold_icon.svg";
 import ReturnIcon from "@assets/undo_icon.svg";
 import EditIcon from "@assets/edit_calendar_icon.svg";
 
-import { Todo } from "@atoms/todoAtom";
-
 import { palette } from "@utils/palette";
 
 import { Back, Card, Icon } from "@components/common";
+import { ResTodo } from "@api/todo";
 
 interface Props {
-  item?: Todo;
+  item?: ResTodo;
   type: "todo" | "complete" | "hold";
   handleCloseCard: () => void;
-  handleClickReturn: (id: string) => void;
-  handleClickEdit: (id: string) => void;
   handleClickDelete: (id: string) => void;
-  handleClickHold: (id: string) => void;
+  handleClickEdit: (id: string) => void;
+  handleChangeState: (id: string, type: Props["type"], val: boolean) => void;
 }
 
 const CardContainer = ({
   item,
   type,
   handleCloseCard,
-  handleClickReturn,
   handleClickEdit,
-  handleClickHold,
   handleClickDelete,
+  handleChangeState,
 }: Props) => {
   return (
     <div
@@ -41,7 +38,12 @@ const CardContainer = ({
         height: "100%",
       }}
     >
-      <Back onClick={handleCloseCard}></Back>
+      <Back
+        css={{
+          background: "rgba(0,0,0,0.25)",
+        }}
+        onClick={handleCloseCard}
+      ></Back>
       <Card type={type}>
         {item ? (
           <>
@@ -69,7 +71,7 @@ const CardContainer = ({
                   src={HoldIcon}
                   alt="hold"
                   onClick={() => {
-                    handleClickHold(item.id);
+                    handleChangeState(item.id, "hold", true);
                     handleCloseCard();
                   }}
                 ></Icon>
@@ -78,7 +80,7 @@ const CardContainer = ({
                   src={ReturnIcon}
                   alt="return"
                   onClick={() => {
-                    handleClickReturn(item.id);
+                    handleChangeState(item.id, "hold", false);
                     handleCloseCard();
                   }}
                 ></Icon>
@@ -100,7 +102,7 @@ const CardContainer = ({
                 fontWeight: "700",
               }}
             >
-              {item.date}
+              {item.date.split("T")[0]}
             </span>
             <span
               css={{
@@ -153,7 +155,7 @@ const CardContainer = ({
                 opacity: "40%",
               }}
             >
-              {item.editDate}
+              {item.edit_date}
             </span>
           </>
         ) : (

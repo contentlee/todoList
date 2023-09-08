@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const http = axios.create({
   baseURL: "http://localhost:8080/",
@@ -12,6 +12,6 @@ http.interceptors.request.use(<T>(config: T): T => {
   return config;
 });
 
-http.interceptors.response.use(<T>(config: T): T => {
-  return config;
+http.interceptors.response.use((config: AxiosResponse) => {
+  return config.data;
 });

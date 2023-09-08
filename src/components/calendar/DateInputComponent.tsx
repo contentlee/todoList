@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { setDateToString } from "@utils/datepiacker";
+import { setArrayToText } from "@utils/datepiacker";
 import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
@@ -13,7 +13,7 @@ const DateInputComponent = ({ date, children, size, ...props }: Props) => {
     <input
       readOnly
       type="text"
-      value={date ? setDateToString(date) : ""}
+      value={date ? setArrayToText(date) : ""}
       css={{
         flex: 1,
         outline: "none",

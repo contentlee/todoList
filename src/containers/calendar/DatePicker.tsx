@@ -13,6 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   calendarSize?: "small" | "regular" | "large";
 }
 
+// Calendar 생성에만 관여하고, 내부의 값을 조정하지 않음
 const DatePicker = ({ id, pickerSize = "small", calendarSize = "regular", ...props }: Props) => {
   const { year, month, day } = useRecoilValue(calendarAtomFamily(id));
   const [isOpened, setOpened] = useState(false);

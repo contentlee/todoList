@@ -11,21 +11,13 @@ import { ListItem } from "@components/list";
 
 interface Props {
   item: Todo;
-  handleChangeCheckbox: (id: string) => void;
   handleClickItem: (item: Todo) => void;
-  handleClickReturn: (id: string) => void;
   handleClickEdit: (id: string) => void;
   handleClickDelete: (id: string) => void;
+  handleChangeState: (id: string, type: "todo" | "hold" | "complete", val: boolean) => void;
 }
 
-const ListItemContainer = ({
-  item,
-  handleChangeCheckbox,
-  handleClickItem,
-  handleClickReturn,
-  handleClickEdit,
-  handleClickDelete,
-}: Props) => {
+const ListItemContainer = ({ item, handleChangeState, handleClickItem, handleClickEdit, handleClickDelete }: Props) => {
   const type = useRecoilValue(typeAtom);
 
   return (
@@ -34,7 +26,7 @@ const ListItemContainer = ({
         <Checkbox
           id={item.id}
           defaultChecked={type === "complete"}
-          onChange={() => handleChangeCheckbox(item.id)}
+          onChange={() => handleChangeState(item.id, "complete", !(type === "complete"))}
         ></Checkbox>
       )}
       <div
@@ -52,7 +44,9 @@ const ListItemContainer = ({
         {item.title}
       </div>
       <div css={{ display: "flex", gap: "8px" }}>
-        {type === "hold" && <Icon src={UndoIcon} alt="undo" onClick={() => handleClickReturn(item.id)}></Icon>}
+        {type === "hold" && (
+          <Icon src={UndoIcon} alt="undo" onClick={() => handleChangeState(item.id, type, false)}></Icon>
+        )}
         <Icon src={EditCalendarIcon} alt="edit" onClick={() => handleClickEdit(item.id)}></Icon>
         <Icon src={DeleteIcon} alt="delete" onClick={() => handleClickDelete(item.id)}></Icon>
       </div>

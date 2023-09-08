@@ -1,13 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { useQuery } from "react-query";
 
 import { PageLayout } from "@components/common";
-import { NavContainer } from "@containers/common";
-import { getTodos } from "@api/todo";
+import { ErrorContainer, NavContainer } from "@containers/common";
 
 const MainPage = () => {
-  const todo = useQuery("todos", getTodos);
-  console.log(todo);
   return (
     <PageLayout css={{ gap: "10px" }}>
       <Outlet />

@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import ArrowIcon from "@assets/arrow_icon.svg";
 
 import { DAY_OF_WEEK } from "@utils/constant";
-import { makeDate, makeDateList, makeDay, setDateToString, setDateProps } from "@utils/datepiacker";
+import { makeDate, makeDateList, makeDay, setArrayToText, setDateProps } from "@utils/datepiacker";
 
 import { calendarAtomFamily } from "@atoms/calendarAtom";
 
@@ -25,11 +25,12 @@ interface Props {
   onCloseCalendar?: () => void;
 }
 
-const Calendar = ({ id, size, onCloseCalendar = () => {} }: Props) => {
-  const [selected, setSelected] = useRecoilState(calendarAtomFamily(id));
-
-  // 표기되는 값의 타입 달 또는 날짜
+const Calendar = ({ id, onCloseCalendar = () => {} }: Props) => {
+  // 표기되는 값의 타입
   const [calendarType, setCalendarType] = useState<"Date" | "Month">();
+
+  // 선택된 날짜
+  const [selected, setSelected] = useRecoilState(calendarAtomFamily(id));
 
   // 선택된 연도, 달
   const [year, setYear] = useState<number>(selected.year);
@@ -84,7 +85,7 @@ const Calendar = ({ id, size, onCloseCalendar = () => {} }: Props) => {
               }}
               onClick={(e) => handleClickArrow(e, -1)}
             ></Icon>
-            <CalendarTitle handleOnClick={handleClickTitle}>{setDateToString(month)}</CalendarTitle>
+            <CalendarTitle handleOnClick={handleClickTitle}>{setArrayToText(month)}</CalendarTitle>
             <Icon src={ArrowIcon} onClick={(e) => handleClickArrow(e, 1)}></Icon>
           </CalendarHead>
           <CalendarBody>

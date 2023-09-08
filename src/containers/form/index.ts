@@ -1,2 +1,4 @@
 import AddTodoContainer from "./AddTodoContainer";
-export { AddTodoContainer };
+import EditTodoContainer from "./EditTodoContainer";
+
+export { AddTodoContainer, EditTodoContainer };

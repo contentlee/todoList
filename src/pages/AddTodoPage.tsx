@@ -1,9 +1,10 @@
+import { Title } from "@components/common";
 import { AddTodoContainer } from "@containers/form";
 
 const AddTodoPage = () => {
   return (
     <>
-      <div>추가</div>
+      <Title>할일 추가</Title>
       <AddTodoContainer></AddTodoContainer>
     </>
   );

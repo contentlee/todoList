@@ -8,6 +8,8 @@ import Icon from "./Icon";
 import Input from "./Input";
 import PageLayout from "./PageLayout";
 import Select from "./Select";
+import Spinner from "./Spinner";
 import TextArea from "./TextArea";
+import Title from "./Title";
 
-export { Alert, Back, Button, Card, Checkbox, Form, Icon, Input, PageLayout, Select, TextArea };
+export { Alert, Back, Button, Card, Checkbox, Form, Icon, Input, PageLayout, Select, Spinner, TextArea, Title };

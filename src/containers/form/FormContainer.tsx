@@ -41,6 +41,7 @@ const FormContainer = ({ todo, handleSubmit, handleClickReturn }: Props) => {
           <DatePicker
             id="form"
             css={{
+              display: "flex",
               flex: 1,
               textAlign: "left",
               fontSize: "12px",

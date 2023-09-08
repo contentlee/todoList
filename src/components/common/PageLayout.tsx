@@ -18,6 +18,7 @@ const PageLayout = ({ children, ...props }: Props) => {
         padding: "20px",
         paddingBottom: "64px",
         boxSizing: "border-box",
+        overflow: "hidden",
       }}
       {...props}
     >

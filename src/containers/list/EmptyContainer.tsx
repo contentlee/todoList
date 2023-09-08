@@ -7,10 +7,10 @@ import { Card, Icon } from "@components/common";
 
 interface Props {
   type: "todo" | "complete" | "hold";
-  onClick?: () => void;
+  handleClickAdd?: () => void;
 }
 
-const EmptyContainer = ({ type, onClick = () => {} }: Props) => {
+const EmptyContainer = ({ type, handleClickAdd = () => {} }: Props) => {
   return (
     <Card type={type}>
       <span
@@ -44,7 +44,7 @@ const EmptyContainer = ({ type, onClick = () => {} }: Props) => {
                 opacity: "40%",
               },
             }}
-            onClick={onClick}
+            onClick={handleClickAdd}
           >
             <Icon src={AddIcon} size="large" alt="add"></Icon>
           </div>

@@ -19,12 +19,16 @@ export const makeDateList = ([y, m]: number[]) => {
   ];
 };
 
-export const setDateToString = ([y, m, d]: number[]) => {
+export const setDateToText = (date: string) => {
+  return date.split("T")[0].split("-").join(".");
+};
+
+export const setArrayToText = ([y, m, d]: number[]) => {
   const month = m < 10 ? `0${m}` : m;
 
   if (d) {
     const date = d < 10 ? `0${d}` : d;
-    return `${y}.${month}.${date} `;
+    return `${y}.${month}.${date}`;
   }
 
   if (m) {
@@ -39,6 +43,19 @@ export const setStringToArray = (d: string) => {
     .split(" ")[0]
     .split("-")
     .map((v) => +v);
+};
+
+export const setArrayToPath = ([y, m, d]: number[]) => {
+  const month = m < 10 ? `0${m}` : m;
+  const date = d < 10 ? `0${d}` : d;
+  return `${y}${month}${date} `;
+};
+
+export const setPathToArray = (date: string) => {
+  const y = parseInt(date.slice(0, 4));
+  const m = parseInt(date.slice(4, 6));
+  const d = parseInt(date.slice(6));
+  return [y, m, d];
 };
 
 type TState = "basic" | "selected" | "today";
