@@ -9,6 +9,7 @@ import { calendarAtomFamily } from "@atoms/calendarAtom";
 
 import FormContainer from "./FormContainer";
 import { produce } from "immer";
+import { alertAtom } from "@atoms/stateAtom";
 
 const AddTodoContainer = () => {
   const navigate = useNavigate();
@@ -17,13 +18,15 @@ const AddTodoContainer = () => {
   const [_, setDate] = useRecoilState(calendarAtomFamily("form"));
   const { year: iYear, month: iMonth, day: iDay } = useRecoilValue(calendarAtomFamily("todoList"));
 
+  const [__, setAlert] = useRecoilState(alertAtom);
+
   const { mutate } = useMutation(createTodo);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const target = (idx: number) => e.currentTarget[idx] as HTMLInputElement;
-    if (!target(0).value) return (target(0).placeholder = "제목이 입력되지 않았습니다!");
+    if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
     const todo = {
       date: target(2).value,
       title: target(0).value,
@@ -42,8 +45,11 @@ const AddTodoContainer = () => {
     mutate(todo, {
       onSuccess: () => {
         navigate("/");
+        setAlert({ isOpened: true, type: "success", children: "데이터 생성에 성공하였습니다." });
       },
-      onError: () => {},
+      onError: () => {
+        setAlert({ isOpened: true, type: "error", children: "데이터 생성에 실패하였습니다." });
+      },
     });
   };
 

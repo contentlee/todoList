@@ -16,7 +16,7 @@ const CalendarLayout = ({ children }: Props) => {
         alignItems: "center",
         justifyContent: "center",
         padding: "40px 20px",
-        minWidth: "300px",
+        minWidth: "280px",
 
         border: "1px solid " + palette.gray100,
         backgroundColor: palette.white,

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import { PageLayout } from "@components/common";
-import { ErrorContainer, NavContainer } from "@containers/common";
+import { NavContainer } from "@containers/common";
 
 const MainPage = () => {
   return (

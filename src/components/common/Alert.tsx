@@ -1,4 +1,5 @@
 import { HTMLAttributes } from "react";
+
 import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -10,13 +11,16 @@ const Alert = ({ type, children, ...props }: Props) => {
   return (
     <div
       css={{
+        position: "relative",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
         maxWidth: "350px",
         height: "2.5em",
+        padding: "0 14px",
         gap: "1.25em",
+        color: palette.white,
         ...TYPE_VARIANTS[type],
       }}
       {...props}
@@ -31,10 +35,10 @@ const TYPE_VARIANTS = {
     backgroundColor: palette.green,
   },
   error: {
-    backgroundColor: palette.sub_red,
+    backgroundColor: palette.red,
   },
   warning: {
-    backgroundColor: palette.purple,
+    backgroundColor: palette.sub_purple,
   },
   alarm: {
     border: `1px solid ${palette.gray600}`,

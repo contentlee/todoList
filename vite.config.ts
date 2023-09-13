@@ -1,8 +1,11 @@
 import { defineConfig } from "vite";
+
+import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react";
+
 import { resolve } from "path";
 
-// https://vitejs.dev/config/
+// https://vitejs.dev/config/s
 export default defineConfig({
   resolve: {
     alias: [
@@ -11,6 +14,7 @@ export default defineConfig({
       { find: "@atoms", replacement: resolve(__dirname, "src/atoms") },
       { find: "@components", replacement: resolve(__dirname, "src/components") },
       { find: "@containers", replacement: resolve(__dirname, "src/containers") },
+      { find: "@hooks", replacement: resolve(__dirname, "src/hooks") },
       { find: "@lib", replacement: resolve(__dirname, "src/lib") },
       { find: "@pages", replacement: resolve(__dirname, "src/pages") },
       { find: "@utils", replacement: resolve(__dirname, "src/utils") },
@@ -24,13 +28,26 @@ export default defineConfig({
         plugins: ["@emotion/babel-plugin"],
       },
     }),
+    tsconfigPaths(),
   ],
+
   build: {
     minify: "terser",
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
+      },
+    },
+  },
+
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080/",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

@@ -12,14 +12,14 @@ import { setDateToText, setPathToArray } from "@utils/datepiacker";
 import { compareObjects } from "@utils/comparison";
 
 import FormContainer from "./FormContainer";
-import { ErrorContainer, LoadingContainer } from "@containers/common";
+import { ErrorContainer } from "@containers/common";
 
 const EditTodoContainer = () => {
   const navigate = useNavigate();
   const { date, id } = useParams();
 
   const [_, setDate] = useRecoilState(calendarAtomFamily("form"));
-  const { data, isLoading, isError, isSuccess, refetch } = useQuery(["todo", "getItem"], () => getTodo(date!, id!));
+  const { data, isError, isSuccess, refetch } = useQuery(["todo", "getItem"], () => getTodo(date!, id!));
 
   const { mutate } = useMutation(editTodo);
 
@@ -81,7 +81,6 @@ const EditTodoContainer = () => {
     );
   }, []);
 
-  if (isLoading) return <LoadingContainer></LoadingContainer>;
   if (isError) return <ErrorContainer refetch={refetch}></ErrorContainer>;
   if (isSuccess)
     return (

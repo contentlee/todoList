@@ -59,6 +59,7 @@ const SIZE_VARIANTS = {
   large: {
     fontSize: "16px",
     padding: "0 16px",
+    height: "42px",
   },
 };
 

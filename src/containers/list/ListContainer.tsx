@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useMutation, useQuery } from "react-query";
 
 import { calendarAtomFamily } from "@atoms/calendarAtom";
@@ -18,15 +18,17 @@ import EmptyContainer from "./EmptyContainer";
 import ListItemContainer from "./ListItemContainer";
 import CardContainer from "./CardContainer";
 import { produce } from "immer";
-import { ErrorContainer, LoadingContainer } from "@containers/common";
+import { ErrorContainer } from "@containers/common";
+import { alertAtom } from "@atoms/stateAtom";
 
 const ListContainer = () => {
   const navigate = useNavigate();
 
   const type = useRecoilValue(typeAtom);
   const selectedDate = useRecoilValue(calendarAtomFamily("todoList"));
+  const [_, setAlert] = useRecoilState(alertAtom);
 
-  const { data, isLoading, isError, isSuccess, refetch } = useQuery(["todo", "getList"], () =>
+  const { data, isError, isSuccess, refetch } = useQuery(["todo", "getList"], () =>
     getTodos(setArrayToPath([selectedDate.year, selectedDate.month, selectedDate.day]))
   );
 
@@ -72,6 +74,10 @@ const ListContainer = () => {
               return draft;
             })
           );
+          setAlert({ isOpened: true, type: "error", children: "데이터 변경에 성공하였습니다." });
+        },
+        onError: () => {
+          setAlert({ isOpened: true, type: "error", children: "데이터 변경에 실패하였습니다." });
         },
       }
     );
@@ -87,13 +93,16 @@ const ListContainer = () => {
             return draft;
           })
         );
+        setAlert({ isOpened: true, type: "success", children: "데이터 삭제에 성공하였습니다." });
       },
-      onError: () => {},
+      onError: () => {
+        setAlert({ isOpened: true, type: "error", children: "데이터 삭제에 실패하였습니다." });
+      },
     });
 
   useEffect(() => {
     if (data) {
-      setStore(data);
+      setStore(data.data);
     }
   }, [data]);
 
@@ -104,7 +113,6 @@ const ListContainer = () => {
   return (
     <ListLayout>
       {isError && <ErrorContainer refetch={refetch}></ErrorContainer>}
-      {isLoading && <LoadingContainer></LoadingContainer>}
       {isSuccess &&
         (list.length !== 0 ? (
           <>

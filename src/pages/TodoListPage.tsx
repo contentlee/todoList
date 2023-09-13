@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import { TYPE_STR } from "@utils/constant";
 
 import { ListContainer, ListTabContainer } from "@containers/list";
 import { DatePicker } from "@containers/calendar";
-import { LoadingContainer } from "@containers/common";
 
 const TodoListPage = () => {
   return (
@@ -21,9 +19,7 @@ const TodoListPage = () => {
           return <ListTabContainer key={val} id={val} type={val} name="list"></ListTabContainer>;
         })}
       </div>
-      <Suspense fallback={<LoadingContainer></LoadingContainer>}>
-        <ListContainer></ListContainer>
-      </Suspense>
+      <ListContainer></ListContainer>
     </>
   );
 };
