@@ -11,13 +11,13 @@ import { calendarAtomFamily, setCalendarAction } from "@atoms/calendarAtom";
 import { modalAtom, toggleCalendarAction, toggleMapAction } from "@atoms/stateAtom";
 import { placeAtomFamily, setPlaceAction } from "@atoms/mapAtom";
 
-import { CATEGORY } from "@utils/constant";
 import { setArrayToText, setStringToArray } from "@utils/datepiacker";
 
 import { Calendar } from "@containers/calendar";
 import { MapFormContaienr } from "@containers/maps";
 
-import { Button, Form, Icon, Input, Select, TextArea } from "@components/common";
+import { Button, Form, Icon, Input, TextArea } from "@components/common";
+import { CategorySelect } from "@containers/category";
 
 interface Props {
   todo?: Todo;
@@ -74,8 +74,7 @@ const FormContainer = ({ todo, handleSubmit }: Props) => {
         type === "map" &&
         createPortal(<MapFormContaienr id="form" value={place}></MapFormContaienr>, document.body, "map-form")}
 
-      <Select label="분류" value={todo?.category ? todo.category : ""} option={CATEGORY}></Select>
-
+      <CategorySelect category={todo?.category}></CategorySelect>
       <TextArea label="내용" defaultValue={todo?.content}></TextArea>
       <div
         css={{

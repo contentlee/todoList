@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { palette } from "@utils/palette";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "reset";
   size?: "medium" | "large";
 }
 
@@ -11,8 +11,8 @@ const Button = ({ variant = "primary", size = "medium", ...props }: Props) => {
     <button
       css={{
         outline: "none",
-        border: "none",
         cursor: "pointer",
+        border: "1px solid transparent",
 
         transition: "background .2s ease,color .1s ease",
 
@@ -33,8 +33,8 @@ const TYPE_VARIANTS = {
   primary: {
     color: palette.white,
     backgroundColor: palette.gray600,
+
     "&:hover": {
-      border: "1px solid transparent",
       color: palette.gray600,
       backgroundColor: palette.white,
       borderColor: palette.gray600,
@@ -46,9 +46,15 @@ const TYPE_VARIANTS = {
     backgroundColor: palette.white,
     borderColor: palette.gray600,
     "&:hover": {
-      border: "none",
       color: palette.white,
       backgroundColor: palette.gray600,
+    },
+  },
+  reset: {
+    color: palette.white,
+    background: palette.red,
+    "&:hover": {
+      filter: "grayscale(40%);",
     },
   },
 };

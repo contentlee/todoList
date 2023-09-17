@@ -100,11 +100,17 @@ const MapFormContaienr = ({ id, value }: Props) => {
             refetch();
           },
           onError: () => {
-            setAlert({ isOpened: true, type: "success", children: "장소 등록에 실패하였습니다." });
+            setAlert({ isOpened: true, type: "error", children: "장소 등록에 실패하였습니다." });
           },
         }
       );
     }
+  };
+
+  const handleClickReset = (e: React.MouseEvent) => {
+    e.preventDefault();
+    resetPlace();
+    resetModal();
   };
 
   useEffect(() => {
@@ -158,6 +164,9 @@ const MapFormContaienr = ({ id, value }: Props) => {
       </div>
       <Button variant="secondary" css={{ width: "100%" }} onClick={handleClickResister}>
         내장소 등록
+      </Button>
+      <Button variant="reset" css={{ width: "100%" }} onClick={handleClickReset}>
+        RESET
       </Button>
     </MapLayout>
   );

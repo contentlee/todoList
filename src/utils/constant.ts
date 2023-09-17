@@ -22,5 +22,3 @@ export const CONSTANT_STR = {
     title: "보류 중인 할일은",
   },
 };
-
-export const CATEGORY = ["일상", "과제"];
