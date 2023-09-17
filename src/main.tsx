@@ -15,15 +15,15 @@ const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
           <HttpProvider>
             <GoogleOAuthProvider clientId={client_id}>
               <App />
             </GoogleOAuthProvider>
           </HttpProvider>
-        </QueryClientProvider>
-      </RecoilRoot>
+        </RecoilRoot>
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

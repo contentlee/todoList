@@ -5,7 +5,9 @@ const AlarmPage = () => {
   return (
     <PageLayout
       css={{
-        padding: "20px 0 64px",
+        width: "100%",
+        padding: "0",
+        margin: "0",
       }}
     >
       <AlarmListContainer date="2023-09-12">

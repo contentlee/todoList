@@ -1,14 +1,13 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "react-query";
-import { produce } from "immer";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { editTodo, getTodo } from "@api/todo";
 
-import { calendarAtomFamily } from "@atoms/calendarAtom";
+import { alertAtom } from "@atoms/stateAtom";
+import { placeAtomFamily } from "@atoms/mapAtom";
 
-import { setDateToText, setPathToArray } from "@utils/datepiacker";
+import { setDateToText } from "@utils/datepiacker";
 import { compareObjects } from "@utils/comparison";
 
 import FormContainer from "./FormContainer";
@@ -18,7 +17,10 @@ const EditTodoContainer = () => {
   const navigate = useNavigate();
   const { date, id } = useParams();
 
-  const [_, setDate] = useRecoilState(calendarAtomFamily("form"));
+  const [__, setAlert] = useRecoilState(alertAtom);
+
+  const { name, lat, lng } = useRecoilValue(placeAtomFamily("form"));
+
   const { data, isError, isSuccess, refetch } = useQuery(["todo", "getItem"], () => getTodo(date!, id!));
 
   const { mutate } = useMutation(editTodo);
@@ -28,7 +30,7 @@ const EditTodoContainer = () => {
 
     const target = (idx: number) => e.currentTarget[idx] as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-    if (!target(0).value) return ((target(0) as HTMLInputElement).placeholder = "제목이 입력되지 않았습니다!");
+    if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
 
     const obj1 = {
       date: target(2).value,
@@ -36,9 +38,9 @@ const EditTodoContainer = () => {
       content: target(5).value,
       place: {
         marker: "A",
-        name: "우리집",
-        lat: 37.5115557,
-        lng: 127.0595261,
+        name,
+        lat,
+        lng,
       },
       category: target(4).value,
     };
@@ -55,6 +57,10 @@ const EditTodoContainer = () => {
         {
           onSuccess: () => {
             navigate("/");
+            setAlert({ isOpened: true, type: "success", children: "데이터 수정에 성공하였습니다." });
+          },
+          onError: () => {
+            setAlert({ isOpened: true, type: "error", children: "데이터 수정에 실패하였습니다." });
           },
         }
       );
@@ -63,29 +69,8 @@ const EditTodoContainer = () => {
     }
   };
 
-  const handleClickReturn = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/");
-  };
-
-  useEffect(() => {
-    setDate((prev) =>
-      produce(prev, (draft) => {
-        const [y, m, d] = setPathToArray(date!);
-        draft.year = y;
-        draft.month = m;
-        draft.day = d;
-
-        return draft;
-      })
-    );
-  }, []);
-
   if (isError) return <ErrorContainer refetch={refetch}></ErrorContainer>;
-  if (isSuccess)
-    return (
-      <FormContainer todo={data} handleSubmit={handleSubmit} handleClickReturn={handleClickReturn}></FormContainer>
-    );
+  if (isSuccess) return <FormContainer todo={data} handleSubmit={handleSubmit}></FormContainer>;
 };
 
 export default EditTodoContainer;

@@ -5,10 +5,11 @@ import { useRecoilState } from "recoil";
 import { useGoogleLogin } from "@react-oauth/google";
 
 import { login, refresh } from "@api/user";
+
 import { userAtom } from "@atoms/userAtom";
+import { alertAtom } from "@atoms/stateAtom";
 
 import { Button } from "@components/common";
-import { alertAtom } from "@atoms/stateAtom";
 
 const OAuthContainer = () => {
   const navigate = useNavigate();

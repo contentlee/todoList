@@ -1,15 +1,17 @@
-import { HTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 import { palette } from "@utils/palette";
 
-interface Props extends HTMLAttributes<HTMLInputElement> {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
+  handleOnClick?: (e: React.MouseEvent) => void;
   children?: React.ReactNode;
 }
 
-const Input = ({ label, children, ...props }: Props) => {
+const Input = ({ label, children, handleOnClick = (_) => {}, ...props }: Props) => {
   return (
     <div
+      onClick={handleOnClick}
       css={{
         position: "relative",
         display: "flex",
@@ -34,6 +36,7 @@ const Input = ({ label, children, ...props }: Props) => {
         {label}
       </label>
       <input
+        type="text"
         css={{
           flex: 1,
           outline: "none",

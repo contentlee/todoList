@@ -9,7 +9,7 @@
       "@containers/*": ["src/containers/*"],
       "@hooks/*": ["src/hooks/*"],
       "@lib/*": ["src/lib/*"],
-      "@pages/*": ["src/pages/*"],
+      "@pages": ["src/pages/"],
       "@utils/*": ["src/utils/*"],
       "@helpers/*": ["src/helpers/*"]
     }

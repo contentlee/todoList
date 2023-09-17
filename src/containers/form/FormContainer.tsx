@@ -1,60 +1,81 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { createPortal } from "react-dom";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
 import NavIcon from "@assets/share_location_icon.svg";
 import CalendarIcon from "@assets/calendar_icon.svg";
 
-import { Button, Form, Icon, Input, Select, TextArea } from "@components/common";
-import { CATEGORY } from "@utils/constant";
-import { DatePicker } from "@containers/calendar";
 import { Todo } from "@atoms/todoAtom";
+import { calendarAtomFamily, setCalendarAction } from "@atoms/calendarAtom";
+import { modalAtom, toggleCalendarAction, toggleMapAction } from "@atoms/stateAtom";
+import { placeAtomFamily, setPlaceAction } from "@atoms/mapAtom";
+
+import { CATEGORY } from "@utils/constant";
+import { setArrayToText, setStringToArray } from "@utils/datepiacker";
+
+import { Calendar } from "@containers/calendar";
+import { MapFormContaienr } from "@containers/maps";
+
+import { Button, Form, Icon, Input, Select, TextArea } from "@components/common";
 
 interface Props {
   todo?: Todo;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleClickReturn: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const FormContainer = ({ todo, handleSubmit, handleClickReturn }: Props) => {
-  const [category, setCategory] = useState(todo?.category ? todo.category : "");
+const FormContainer = ({ todo, handleSubmit }: Props) => {
+  const navigate = useNavigate();
 
-  const handleClickOption = (e: React.MouseEvent, item: string) => {
+  const [{ isOpened, type }, setModal] = useRecoilState(modalAtom);
+
+  const [{ year, month, day }, setDate] = useRecoilState(calendarAtomFamily("form"));
+
+  const handleToggleCalendar = (e: React.MouseEvent) => {
     e.preventDefault();
-    setCategory(item);
+    setModal(toggleCalendarAction);
   };
+
+  const [place, setPlace] = useRecoilState(placeAtomFamily("form"));
+  const resetPlace = useResetRecoilState(placeAtomFamily("form"));
+
+  const handleToggleMap = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setModal(toggleMapAction);
+  };
+
+  const handleClickReturn = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (todo) {
+      const [year, month, day] = setStringToArray(todo.date);
+      setDate(setCalendarAction({ year, month, day }));
+      setPlace(setPlaceAction(todo.place));
+    } else {
+      resetPlace();
+    }
+  }, []);
 
   return (
     <Form onSubmit={handleSubmit} onReset={handleClickReturn}>
       <Input label="제목" defaultValue={todo?.title}></Input>
-      <Input
-        label="날짜"
-        css={{
-          display: "none",
-          flex: 1,
-        }}
-      >
-        <div
-          css={{
-            flex: 1,
-            display: "flex",
-          }}
-        >
-          <DatePicker
-            id="form"
-            css={{
-              display: "flex",
-              flex: 1,
-              textAlign: "left",
-              fontSize: "12px",
-              fontWeight: 400,
-            }}
-          ></DatePicker>
-          <Icon src={CalendarIcon}></Icon>
-        </div>
+      <Input label="날짜" value={setArrayToText([year, month, day])} readOnly handleOnClick={handleToggleCalendar}>
+        <Icon src={CalendarIcon}></Icon>
       </Input>
-      <Input label="장소" defaultValue={todo?.place.name}>
+      {isOpened && type === "calendar" && createPortal(<Calendar id="form"></Calendar>, document.body, "calendar")}
+
+      <Input value={place.name} label="장소" readOnly handleOnClick={handleToggleMap}>
         <Icon src={NavIcon}></Icon>
       </Input>
-      <Select label="분류" value={category} option={CATEGORY} handleClickOption={handleClickOption}></Select>
+      {isOpened &&
+        type === "map" &&
+        createPortal(<MapFormContaienr id="form" value={place}></MapFormContaienr>, document.body, "map-form")}
+
+      <Select label="분류" value={todo?.category ? todo.category : ""} option={CATEGORY}></Select>
+
       <TextArea label="내용" defaultValue={todo?.content}></TextArea>
       <div
         css={{

@@ -28,40 +28,46 @@ const HttpProvider = ({ children }: Props) => {
   const resetUser = useResetRecoilState(userAtom);
   const { mutate } = useMutation(refresh);
 
-  useEffect(() => {
-    const reqIntercepter = http.interceptors.request.use((config) => {
-      if (userInfo.access_token) {
-        config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
-      }
+  const reqIntercepter = http.interceptors.request.use((config) => {
+    if (userInfo.access_token) {
+      config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
+    }
+    return config;
+  });
+
+  const resInterceptor = http.interceptors.response.use(
+    <T,>(config: AxiosResponse<T, any>): T | AxiosResponse => {
+      if (config.data) return config.data;
       return config;
-    });
-
-    return () => http.interceptors.request.eject(reqIntercepter);
-  }, [userInfo]);
+    },
+    (err: AxiosError) => {
+      if (err.code === "401") {
+        resetUser();
+        navigate("/");
+      }
+      if (err.code === "403") {
+        mutate("", {
+          onSuccess: ({ access_token }) => {
+            if (access_token) {
+              setUser({ access_token, is_logged_in: true });
+              navigate("/");
+            }
+          },
+          onError: () => {
+            resetUser();
+            navigate("/");
+          },
+        });
+      }
+    }
+  );
 
   useEffect(() => {
-    const resInterceptor = http.interceptors.response.use(
-      <T,>(config: AxiosResponse<T, any>): T => config.data,
-      (err: AxiosError) => {
-        if (err.code === "401") {
-          resetUser();
-          navigate("/");
-        }
-        if (err.code === "403") {
-          mutate("", {
-            onSuccess: ({ access_token }) => {
-              if (access_token) {
-                setUser({ access_token, is_logged_in: true });
-                navigate("/");
-              }
-            },
-          });
-        }
-      }
-    );
-
-    return () => http.interceptors.response.eject(resInterceptor);
-  }, []);
+    return () => {
+      http.interceptors.request.eject(reqIntercepter);
+      http.interceptors.response.eject(resInterceptor);
+    };
+  }, [reqIntercepter, resInterceptor]);
 
   return children;
 };

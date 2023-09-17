@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilState } from "recoil";
-import { produce } from "immer";
 import { keyframes } from "@emotion/react";
-
-import { alertAtom } from "@atoms/stateAtom";
-
-import { Alert, Icon } from "@components/common";
 
 import SucessIcon from "@assets/success_icon.svg";
 import ErrorIcon from "@assets/error_icon.svg";
 import WarningIcon from "@assets/warning_icon.svg";
 import CloseIcon from "@assets/close_icon.svg";
+
+import { alertAtom, closeAlertAction } from "@atoms/stateAtom";
+
+import { Alert, Icon } from "@components/common";
 
 const animate = keyframes`
   0%{
@@ -40,23 +39,13 @@ const AlertContainer = () => {
 
   const handleClickClose = (e: React.MouseEvent) => {
     e.preventDefault();
-    setAlert((prev) =>
-      produce(prev, (draft) => {
-        draft.isOpened = false;
-        return draft;
-      })
-    );
+    setAlert(closeAlertAction);
   };
 
   useEffect(() => {
     if (alert.isOpened) {
       const fadeout = setTimeout(() => {
-        setAlert((prev) =>
-          produce(prev, (draft) => {
-            draft.isOpened = false;
-            return draft;
-          })
-        );
+        setAlert(closeAlertAction);
       }, 5000);
       return () => clearTimeout(fadeout);
     }

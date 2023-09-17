@@ -1,5 +1,5 @@
-import { PageLayout } from "@components/common";
 import { OAuthContainer } from "@containers/login";
+import { PageLayout } from "@components/common";
 
 const LoginPage = () => {
   return (

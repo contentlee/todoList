@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
 import ArrowIcon from "@assets/arrow_icon.svg";
 
@@ -7,6 +7,7 @@ import { DAY_OF_WEEK } from "@utils/constant";
 import { makeDate, makeDateList, makeDay, setArrayToText, setDateProps } from "@utils/datepiacker";
 
 import { calendarAtomFamily } from "@atoms/calendarAtom";
+import { modalAtom } from "@atoms/stateAtom";
 
 import { Icon } from "@components/common";
 import {
@@ -21,16 +22,15 @@ import {
 
 interface Props {
   id: string;
-  size: "small" | "regular" | "large";
-  onCloseCalendar?: () => void;
 }
 
-const Calendar = ({ id, onCloseCalendar = () => {} }: Props) => {
+const Calendar = ({ id }: Props) => {
   // 표기되는 값의 타입
   const [calendarType, setCalendarType] = useState<"Date" | "Month">();
 
   // 선택된 날짜
   const [selected, setSelected] = useRecoilState(calendarAtomFamily(id));
+  const resetModal = useResetRecoilState(modalAtom);
 
   // 선택된 연도, 달
   const [year, setYear] = useState<number>(selected.year);
@@ -65,8 +65,8 @@ const Calendar = ({ id, onCloseCalendar = () => {} }: Props) => {
   const handleClickDate = (e: React.MouseEvent, v: number) => {
     e.preventDefault();
 
-    setSelected(({ id }) => ({ id, year: month[0], month: month[1], day: v }));
-    onCloseCalendar();
+    resetModal();
+    setSelected({ year: month[0], month: month[1], day: v });
   };
 
   useEffect(() => {

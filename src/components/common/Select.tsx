@@ -1,4 +1,4 @@
-import { useState, HTMLAttributes } from "react";
+import { useState, useEffect, HTMLAttributes } from "react";
 
 import ArrowIcon from "@assets/expand_more_icon.svg";
 import { palette } from "@utils/palette";
@@ -6,14 +6,21 @@ import { Icon } from ".";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
-  value: string;
+  value?: string;
   option: string[];
-  handleClickOption: (e: React.MouseEvent, item: string) => void;
+  handleClickOption?: (e: React.MouseEvent, item: string) => void;
   children?: React.ReactNode;
 }
 
 const Select = ({ label, value, option, handleClickOption, children, ...props }: Props) => {
   const [isOpened, setOpened] = useState(false);
+  const [curValue, setCurValue] = useState("");
+
+  useEffect(() => {
+    if (value) {
+      setCurValue(value);
+    }
+  }, []);
   return (
     <div
       css={{
@@ -29,7 +36,7 @@ const Select = ({ label, value, option, handleClickOption, children, ...props }:
         backgroundColor: palette.white,
       }}
     >
-      <input css={{ display: "none" }} value={value} readOnly {...props}></input>
+      <input css={{ display: "none" }} value={curValue} readOnly {...props}></input>
 
       <label
         css={{
@@ -76,7 +83,7 @@ const Select = ({ label, value, option, handleClickOption, children, ...props }:
               flex: 1,
             }}
           >
-            {value}
+            {curValue}
           </div>
           <Icon src={ArrowIcon}></Icon>
         </div>
@@ -84,6 +91,7 @@ const Select = ({ label, value, option, handleClickOption, children, ...props }:
         {isOpened && (
           <div
             css={{
+              zIndex: "100",
               position: "absolute",
               top: "100%",
               width: "100%",
@@ -105,8 +113,9 @@ const Select = ({ label, value, option, handleClickOption, children, ...props }:
                   padding: "0 16px",
                 }}
                 onClick={(e) => {
-                  handleClickOption(e, item);
+                  setCurValue(item);
                   setOpened(!isOpened);
+                  if (handleClickOption) handleClickOption(e, item);
                 }}
               >
                 {item}

@@ -4,7 +4,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const CalendarLayout = ({ children }: Props) => {
+const MapLayout = ({ children }: Props) => {
   return (
     <div
       css={{
@@ -13,13 +13,14 @@ const CalendarLayout = ({ children }: Props) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "40px 20px",
+        padding: "20px",
         minWidth: "280px",
         maxWidth: "320px",
+        width: "100%",
 
         border: "1px solid " + palette.gray100,
         backgroundColor: palette.white,
-        gap: "20px",
+        gap: "8px",
         userSelect: "none",
 
         overflow: "hidden",
@@ -30,4 +31,4 @@ const CalendarLayout = ({ children }: Props) => {
   );
 };
 
-export default CalendarLayout;
+export default MapLayout;

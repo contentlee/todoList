@@ -9,6 +9,7 @@ const CalendarBody = ({ children }: Props) => {
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
+        width: "280px",
       }}
     >
       {children}

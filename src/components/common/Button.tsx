@@ -11,14 +11,15 @@ const Button = ({ variant = "primary", size = "medium", ...props }: Props) => {
     <button
       css={{
         outline: "none",
-        border: "1px solid transparent",
-
+        border: "none",
         cursor: "pointer",
 
         transition: "background .2s ease,color .1s ease",
 
         fontFamily: "pretendard",
         fontWeight: 600,
+
+        boxSizing: "border-box",
 
         ...TYPE_VARIANTS[variant],
         ...SIZE_VARIANTS[size],
@@ -32,18 +33,20 @@ const TYPE_VARIANTS = {
   primary: {
     color: palette.white,
     backgroundColor: palette.gray600,
-    borderColor: palette.white,
     "&:hover": {
+      border: "1px solid transparent",
       color: palette.gray600,
       backgroundColor: palette.white,
       borderColor: palette.gray600,
     },
   },
   secondary: {
+    border: "1px solid transparent",
     color: palette.gray600,
     backgroundColor: palette.white,
     borderColor: palette.gray600,
     "&:hover": {
+      border: "none",
       color: palette.white,
       backgroundColor: palette.gray600,
     },

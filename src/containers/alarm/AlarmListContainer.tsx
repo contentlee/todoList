@@ -15,6 +15,7 @@ const AlarmListContainer = ({ date, children }: Props) => {
         maxWidth: "350px",
         minHeight: "96px",
         borderBottom: `1px solid ${palette.gray100}`,
+        boxSizing: "border-box",
         "&:hover": {
           backgroundColor: palette.gray50,
         },

@@ -2,11 +2,12 @@ import { TYPE_STR } from "@utils/constant";
 
 import { ListContainer, ListTabContainer } from "@containers/list";
 import { DatePicker } from "@containers/calendar";
+import { PageLayout } from "@components/common";
 
 const TodoListPage = () => {
   return (
-    <>
-      <DatePicker id="todoList" pickerSize="regular"></DatePicker>
+    <PageLayout css={{ gap: "10px" }}>
+      <DatePicker id="todoList"></DatePicker>
       <div
         css={{
           display: "flex",
@@ -20,7 +21,7 @@ const TodoListPage = () => {
         })}
       </div>
       <ListContainer></ListContainer>
-    </>
+    </PageLayout>
   );
 };
 
