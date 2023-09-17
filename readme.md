@@ -72,9 +72,10 @@ $ yarn start
 
 ```jsx
 src
-	├─api
-	├─assets
-	├─atoms
+
+  ├─api
+  ├─assets
+  ├─atoms
   ├─components
   │  ├─calendar
   │  ├─common
