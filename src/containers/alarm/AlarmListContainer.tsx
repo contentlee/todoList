@@ -12,7 +12,6 @@ const AlarmListContainer = ({ date, children }: Props) => {
         position: "relative",
         padding: "20px",
         width: "100%",
-        maxWidth: "350px",
         minHeight: "96px",
         borderBottom: `1px solid ${palette.gray100}`,
         boxSizing: "border-box",

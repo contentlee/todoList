@@ -24,8 +24,8 @@ const OAuthContainer = () => {
     scope: "email profile",
     onSuccess: async ({ code }) => {
       loginMutate(code, {
-        onSuccess: ({ access_token }) => {
-          setUser({ access_token, is_logged_in: true });
+        onSuccess: ({ access_token, email, name }) => {
+          setUser({ access_token, is_logged_in: true, email, name });
         },
         onError: () => {
           setAlert({ isOpened: true, type: "error", children: "로그인에 실패하였습니다." });
@@ -39,18 +39,17 @@ const OAuthContainer = () => {
   });
 
   useEffect(() => {
-    const refresh_token = document.cookie.split("=")[1];
-    if (refresh_token) {
-      refreshMutate(_, {
-        onSuccess: ({ access_token }) => {
-          if (access_token) {
-            setUser({ access_token, is_logged_in: true });
-            navigate("/");
-          }
-        },
-        onError: () => {},
-      });
-    }
+    refreshMutate(_, {
+      onSuccess: ({ access_token, email, name }) => {
+        if (access_token) {
+          setUser({ access_token, is_logged_in: true, email, name });
+          navigate("/");
+        }
+      },
+      onError: () => {
+        console.log("로그인이 필요합니다.");
+      },
+    });
   }, []);
 
   return (

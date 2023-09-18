@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
-import { Select } from "@components/common";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import { getCategories, resisterCategory } from "@api/category";
 import { useRecoilState } from "recoil";
+
+import { getCategories, resisterCategory } from "@api/category";
+
 import { alertAtom } from "@atoms/stateAtom";
 
-interface Props {
-  category?: string;
+import { Select } from "@components/common";
+
+interface Props extends HTMLAttributes<typeof Select> {
+  value?: string;
 }
 
-const CategorySelect = ({ category = "" }: Props) => {
+const CategorySelect = ({ value }: Props) => {
   const [_, setAlert] = useRecoilState(alertAtom);
 
   const { data, refetch } = useQuery("category", () => getCategories());
@@ -44,7 +47,7 @@ const CategorySelect = ({ category = "" }: Props) => {
     }
   }, [data]);
 
-  return <Select type="add" label="분류" value={category} option={options} handleAddOption={handleAddOption}></Select>;
+  return <Select type="add" label="분류" value={value} option={options} handleAddOption={handleAddOption}></Select>;
 };
 
 export default CategorySelect;

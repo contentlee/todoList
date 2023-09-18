@@ -1,3 +1,4 @@
+import CategoryList from "./CategoryList";
 import CategorySelect from "./CategorySelect";
 
-export { CategorySelect };
+export { CategoryList, CategorySelect };

@@ -67,7 +67,7 @@ const ListContainer = () => {
       {
         onSuccess: () => {
           setStore(changeTodoAction(id, type, val));
-          setAlert({ isOpened: true, type: "error", children: "데이터 변경에 성공하였습니다." });
+          setAlert({ isOpened: true, type: "success", children: "데이터 변경에 성공하였습니다." });
           resetModal();
         },
         onError: () => {

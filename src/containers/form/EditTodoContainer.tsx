@@ -33,16 +33,16 @@ const EditTodoContainer = () => {
     if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
 
     const obj1 = {
-      date: target(2).value,
+      date: target(1).value,
       title: target(0).value,
-      content: target(5).value,
+      content: target(4).value,
       place: {
         marker: "A",
         name,
         lat,
         lng,
       },
-      category: target(4).value,
+      category: target(3).value,
     };
     const obj2 = {
       ...data,

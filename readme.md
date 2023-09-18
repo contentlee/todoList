@@ -72,7 +72,6 @@ $ yarn start
 
 ```jsx
 src
-
   ├─api
   ├─assets
   ├─atoms

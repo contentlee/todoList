@@ -35,8 +35,10 @@ const Select = ({
   useEffect(() => {
     if (value) {
       setCurValue(value);
+    } else {
+      setCurValue("");
     }
-  }, []);
+  }, [value]);
   return (
     <div
       css={{
@@ -140,6 +142,8 @@ const Select = ({
                 {item}
               </div>
             ))}
+
+            {/* 카테고리 항목 추가하기 */}
             {type === "add" &&
               (isOpenedAdd ? (
                 <div

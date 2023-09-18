@@ -23,7 +23,7 @@ const MapLayout = ({ children }: Props) => {
         gap: "8px",
         userSelect: "none",
 
-        overflow: "hidden",
+        overflow: "auto",
       }}
     >
       {children}

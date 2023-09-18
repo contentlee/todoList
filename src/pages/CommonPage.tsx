@@ -11,7 +11,7 @@ const CommonPage = () => {
       <Overlay></Overlay>
       <AlertContainer></AlertContainer>
       <LoadingContainer></LoadingContainer>
-      {pathname !== "login" && <NavContainer></NavContainer>}
+      {pathname !== "/login" && <NavContainer></NavContainer>}
 
       <Outlet></Outlet>
     </>

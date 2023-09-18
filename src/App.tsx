@@ -4,7 +4,16 @@ import { useRecoilValue } from "recoil";
 
 import { userAtom } from "@atoms/userAtom";
 
-import { AddTodoPage, AlarmPage, CommonPage, EditTodoPage, LoginPage, TodoListPage } from "@pages";
+import {
+  AddTodoPage,
+  AlarmPage,
+  CommonPage,
+  EditCategoryPage,
+  EditTodoPage,
+  LoginPage,
+  TodoListPage,
+  UserPage,
+} from "@pages";
 
 function App() {
   const { is_logged_in } = useRecoilValue(userAtom);
@@ -19,6 +28,8 @@ function App() {
             <Route path="/add" element={<AddTodoPage />}></Route>
             <Route path="/edit/:date/:id" element={<EditTodoPage />}></Route>
             <Route path="/alarm" element={<AlarmPage />}></Route>
+            <Route path="/mypage" element={<UserPage></UserPage>} />
+            <Route path="/mypage/category" element={<EditCategoryPage></EditCategoryPage>} />
             <Route path="*" element={<Navigate replace to="/" />} />
           </>
         )}

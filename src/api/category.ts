@@ -16,4 +16,4 @@ export interface ResCategories {
 
 export const getCategories = async (): Promise<ResCategories> => await http.get("category/");
 export const resisterCategory = async (category: ReqpCategory) => await http.post("category/add", category);
-export const deleteCategory = async (id: number) => await http.delete(`category/delete/${id}`);
+export const deleteCategory = async (id: string) => await http.delete(`category/delete/${id}`);

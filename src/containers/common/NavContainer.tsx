@@ -43,7 +43,7 @@ const NavContainer = () => {
           }}
         ></div>
       </div>
-      <Icon src={ProfileIcon} size="medium" alt="profile"></Icon>
+      <Icon src={ProfileIcon} size="medium" alt="mypage" onClick={handleIconClick}></Icon>
     </NavLayout>
   );
 };

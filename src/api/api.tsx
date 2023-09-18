@@ -47,9 +47,9 @@ const HttpProvider = ({ children }: Props) => {
       }
       if (err.code === "403") {
         mutate("", {
-          onSuccess: ({ access_token }) => {
+          onSuccess: ({ access_token, email, name }) => {
             if (access_token) {
-              setUser({ access_token, is_logged_in: true });
+              setUser({ access_token, is_logged_in: true, email, name });
               navigate("/");
             }
           },

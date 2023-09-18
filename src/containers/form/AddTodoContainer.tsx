@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useMutation } from "react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { produce } from "immer";
 
 import { createTodo } from "@api/todo";
 
@@ -27,20 +26,20 @@ const AddTodoContainer = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(e.target);
     const target = (idx: number) => e.currentTarget[idx] as HTMLInputElement;
     if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
     const todo = {
       date: target(1).value,
       title: target(0).value,
-      content: target(5).value,
+      content: target(4).value,
       place: {
         marker: "A",
         name,
         lat,
         lng,
       },
-      category: target(4).value,
+      category: target(3).value,
       is_completed: false,
       is_held: false,
     };

@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
+import { useIsFetching, useIsMutating } from "react-query";
 
 import { Spinner } from "@components/common";
-import { useIsFetching, useIsMutating } from "react-query";
 
 const LoadingContainer = () => {
   const isFetching = useIsFetching();
@@ -28,7 +28,7 @@ const LoadingContainer = () => {
         }}
       >
         <Spinner></Spinner>
-        <span>잠시만 기다려주세요..!</span>
+        <span css={{ background: "#fff" }}>잠시만 기다려주세요..!</span>
       </div>,
       document.body,
       "loading"

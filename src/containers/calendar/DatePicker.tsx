@@ -9,11 +9,10 @@ import { modalAtom } from "@atoms/stateAtom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   id: string;
-  pickerSize?: "small" | "regular" | "large";
 }
 
 // Calendar 생성에만 관여하고, 내부의 값을 조정하지 않음
-const DatePicker = ({ id, pickerSize = "small" }: Props) => {
+const DatePicker = ({ id }: Props) => {
   const { year, month, day } = useRecoilValue(calendarAtomFamily(id));
   const [{ isOpened, type }, setModal] = useRecoilState(modalAtom);
 
@@ -33,7 +32,7 @@ const DatePicker = ({ id, pickerSize = "small" }: Props) => {
         width: "100%",
       }}
     >
-      <DateInputComponent date={[year, month, day]} size={pickerSize} onClick={handleClickInput}></DateInputComponent>
+      <DateInputComponent date={[year, month, day]} size="small" onClick={handleClickInput}></DateInputComponent>
       {isOpened && type === "calendar" && createPortal(<Calendar id={id}></Calendar>, document.body)}
     </div>
   );

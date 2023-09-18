@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { createPortal } from "react-dom";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -11,7 +11,7 @@ import { calendarAtomFamily, setCalendarAction } from "@atoms/calendarAtom";
 import { modalAtom, toggleCalendarAction, toggleMapAction } from "@atoms/stateAtom";
 import { placeAtomFamily, setPlaceAction } from "@atoms/mapAtom";
 
-import { setArrayToText, setStringToArray } from "@utils/datepiacker";
+import { setArrayToText, setDateToArray } from "@utils/datepiacker";
 
 import { Calendar } from "@containers/calendar";
 import { MapFormContaienr } from "@containers/maps";
@@ -28,6 +28,8 @@ const FormContainer = ({ todo, handleSubmit }: Props) => {
   const navigate = useNavigate();
 
   const [{ isOpened, type }, setModal] = useRecoilState(modalAtom);
+
+  const [item, setItem] = useState<Todo>();
 
   const [{ year, month, day }, setDate] = useRecoilState(calendarAtomFamily("form"));
 
@@ -51,17 +53,18 @@ const FormContainer = ({ todo, handleSubmit }: Props) => {
 
   useEffect(() => {
     if (todo) {
-      const [year, month, day] = setStringToArray(todo.date);
+      const [year, month, day] = setDateToArray(todo.date);
       setDate(setCalendarAction({ year, month, day }));
       setPlace(setPlaceAction(todo.place));
+      setItem(todo);
     } else {
       resetPlace();
     }
-  }, []);
+  }, [todo]);
 
   return (
     <Form onSubmit={handleSubmit} onReset={handleClickReturn}>
-      <Input label="제목" defaultValue={todo?.title}></Input>
+      <Input label="제목" defaultValue={item?.title}></Input>
       <Input label="날짜" value={setArrayToText([year, month, day])} readOnly handleOnClick={handleToggleCalendar}>
         <Icon src={CalendarIcon}></Icon>
       </Input>
@@ -74,8 +77,8 @@ const FormContainer = ({ todo, handleSubmit }: Props) => {
         type === "map" &&
         createPortal(<MapFormContaienr id="form" value={place}></MapFormContaienr>, document.body, "map-form")}
 
-      <CategorySelect category={todo?.category}></CategorySelect>
-      <TextArea label="내용" defaultValue={todo?.content}></TextArea>
+      <CategorySelect value={item?.category}></CategorySelect>
+      <TextArea label="내용" defaultValue={item?.content}></TextArea>
       <div
         css={{
           display: "flex",

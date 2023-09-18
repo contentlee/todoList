@@ -1,8 +1,10 @@
-interface Props {
+import { HTMLAttributes } from "react";
+
+interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-const ListContent = ({ children }: Props) => {
+const ListContent = ({ children, ...props }: Props) => {
   return (
     <div
       css={{
@@ -17,6 +19,7 @@ const ListContent = ({ children }: Props) => {
         overflow: "auto",
         WebkitScrollSnapType: "y",
       }}
+      {...props}
     >
       {children}
     </div>

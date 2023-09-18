@@ -9,7 +9,23 @@ import Overlay from "./Overlay";
 import PageLayout from "./PageLayout";
 import Select from "./Select";
 import Spinner from "./Spinner";
+import SubText from "./SubText";
 import TextArea from "./TextArea";
 import Title from "./Title";
 
-export { Alert, Button, Card, Checkbox, Form, Icon, Input, Overlay, PageLayout, Select, Spinner, TextArea, Title };
+export {
+  Alert,
+  Button,
+  Card,
+  Checkbox,
+  Form,
+  Icon,
+  Input,
+  Overlay,
+  PageLayout,
+  Select,
+  Spinner,
+  SubText,
+  TextArea,
+  Title,
+};

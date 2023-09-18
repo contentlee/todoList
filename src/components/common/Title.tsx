@@ -1,12 +1,18 @@
-interface Props {
+import { HTMLAttributes } from "react";
+
+interface Props extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
-const Title = ({ children }: Props) => {
+const Title = ({ children, ...props }: Props) => {
   return (
     <div
       css={{
-        fontSize: "18px",
+        width: "100%",
+        fontSize: "24px",
+        fontWeight: 600,
+        boxSizing: "border-box",
       }}
+      {...props}
     >
       {children}
     </div>

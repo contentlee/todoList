@@ -18,6 +18,7 @@ const ListTitle = ({ type = "todo", children, ...props }: Props) => {
         padding: "8px 16px",
         textAlign: "center",
         backgroundColor: palette.white,
+        boxSizing: "border-box",
         ":before, :after": {
           content: "''",
           flexGrow: 1,

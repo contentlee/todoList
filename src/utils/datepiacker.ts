@@ -22,6 +22,12 @@ export const makeDateList = ([y, m]: number[]) => {
 export const setDateToText = (date: string) => {
   return date.split("T")[0].split("-").join(".");
 };
+export const setDateToArray = (date: string) => {
+  return date
+    .split("T")[0]
+    .split("-")
+    .map((v) => +v);
+};
 
 export const setArrayToText = ([y, m, d]: number[]) => {
   const month = m < 10 ? `0${m}` : m;
