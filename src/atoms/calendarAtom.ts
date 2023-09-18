@@ -21,6 +21,6 @@ export const calendarAtomFamily = atomFamily<Calendar, string>({
 
 export const setCalendarAction =
   ({ year, month, day }: Calendar) =>
-  (prev: Calendar) => {
+  () => {
     return { year, month, day };
   };
