@@ -16,7 +16,6 @@ const ListContent = ({ children, ...props }: Props) => {
         marginTop: "8px",
         paddingBottom: "24px",
         gap: "10px",
-        overflow: "auto",
         WebkitScrollSnapType: "y",
       }}
       {...props}

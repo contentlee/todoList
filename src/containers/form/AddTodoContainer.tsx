@@ -26,7 +26,6 @@ const AddTodoContainer = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.target);
     const target = (idx: number) => e.currentTarget[idx] as HTMLInputElement;
     if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
     const todo = {

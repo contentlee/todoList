@@ -20,9 +20,14 @@ const UserBodyContainer = () => {
   const { mutate: logoutMutate } = useMutation(logout);
   const { mutate: removeUserMutate } = useMutation(removeUser);
 
-  const handleClickEditCategory = (e: React.MouseEvent) => {
+  const handleClickUserCategory = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate("/mypage/category");
+  };
+
+  const handleClickUserMap = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate("/mypage/map");
   };
 
   const handleClickRemoveUser = (e: React.MouseEvent) => {
@@ -97,8 +102,8 @@ const UserBodyContainer = () => {
         >
           사용자 설정
         </span>
-        <Button onClick={handleClickEditCategory}>카테고리 설정</Button>
-        <Button>나의 장소 설정</Button>
+        <Button onClick={handleClickUserCategory}>카테고리 설정</Button>
+        <Button onClick={handleClickUserMap}>나의 장소 설정</Button>
       </div>
       <div
         css={{

@@ -14,7 +14,7 @@ import { placeAtomFamily, setPlaceAction } from "@atoms/mapAtom";
 import { setArrayToText, setDateToArray } from "@utils/datepiacker";
 
 import { Calendar } from "@containers/calendar";
-import { MapFormContaienr } from "@containers/maps";
+import { MapModalContainer } from "@containers/maps";
 
 import { Button, Form, Icon, Input, TextArea } from "@components/common";
 import { CategorySelect } from "@containers/category";
@@ -75,7 +75,7 @@ const FormContainer = ({ todo, handleSubmit }: Props) => {
       </Input>
       {isOpened &&
         type === "map" &&
-        createPortal(<MapFormContaienr id="form" value={place}></MapFormContaienr>, document.body, "map-form")}
+        createPortal(<MapModalContainer id="form" value={place}></MapModalContainer>, document.body, "map-form")}
 
       <CategorySelect value={item?.category}></CategorySelect>
       <TextArea label="내용" defaultValue={item?.content}></TextArea>

@@ -41,7 +41,11 @@ input {
 }
 
 div::-webkit-scrollbar {
-  width: 4px;
+  background-color: transparent;
+}
+
+div::-webkit-scrollbar-thumb {
+  width: 1px;
   background-color: rgba(0, 0, 0, 0.1);
 }
 

@@ -1,7 +1,7 @@
 import { PageLayout, SubText, Title } from "@components/common";
 import { CategoryList } from "@containers/category";
 
-const EditCategoryPage = () => {
+const UserCategoryPage = () => {
   return (
     <PageLayout css={{ gap: "10px" }}>
       <Title>
@@ -12,4 +12,4 @@ const EditCategoryPage = () => {
   );
 };
 
-export default EditCategoryPage;
+export default UserCategoryPage;

@@ -19,4 +19,4 @@ export interface ResPlaces {
 
 export const getPlaces = async (): Promise<ResPlaces> => await http.get("place/");
 export const resisterPlace = async (place: ReqpPlace) => await http.post("place/add", place);
-export const deletePlace = async (id: number) => await http.delete(`place/delete/${id}`);
+export const deletePlace = async (id: string) => await http.delete(`place/delete/${id}`);

@@ -12,6 +12,8 @@ import { ResTodo } from "@api/todo";
 
 import { Card, Icon } from "@components/common";
 import { Map } from "@components/maps";
+import { useResetRecoilState } from "recoil";
+import { modalAtom } from "@atoms/stateAtom";
 
 interface Props {
   item?: ResTodo;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleChangeState }: Props) => {
+  const resetModal = useResetRecoilState(modalAtom);
   const [isOpened, setOpened] = useState(false);
   const handleClickPlace = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -48,7 +51,14 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
               userSelect: "none",
             }}
           >
-            <Icon src={EditIcon} alt="edit" onClick={() => handleClickEdit(item.id)}></Icon>
+            <Icon
+              src={EditIcon}
+              alt="edit"
+              onClick={() => {
+                handleClickEdit(item.id);
+                resetModal();
+              }}
+            ></Icon>
 
             {type === "todo" ? (
               <Icon
@@ -56,6 +66,7 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
                 alt="hold"
                 onClick={() => {
                   handleChangeState(item.id, "hold", true);
+                  resetModal();
                 }}
               ></Icon>
             ) : (
@@ -64,6 +75,7 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
                 alt="return"
                 onClick={() => {
                   handleChangeState(item.id, "hold", false);
+                  resetModal();
                 }}
               ></Icon>
             )}
@@ -73,6 +85,7 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
               alt="delete"
               onClick={() => {
                 handleClickDelete(item.id);
+                resetModal();
               }}
             ></Icon>
           </div>
