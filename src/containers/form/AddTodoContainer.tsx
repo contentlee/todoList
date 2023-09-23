@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useMutation } from "react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import { createTodo } from "@api/todo";
+import { useCreateTodo } from "@api/todo";
 
 import { calendarAtomFamily, setCalendarAction } from "@atoms/calendarAtom";
 import { alertAtom } from "@atoms/stateAtom";
@@ -22,7 +21,7 @@ const AddTodoContainer = () => {
 
   const [__, setAlert] = useRecoilState(alertAtom);
 
-  const { mutate } = useMutation(createTodo);
+  const { mutate } = useCreateTodo(() => navigate("/"));
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,15 +42,7 @@ const AddTodoContainer = () => {
       is_held: false,
     };
 
-    mutate(todo, {
-      onSuccess: () => {
-        navigate("/");
-        setAlert({ isOpened: true, type: "success", children: "데이터 생성에 성공하였습니다." });
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "error", children: "데이터 생성에 실패하였습니다." });
-      },
-    });
+    mutate(todo);
   };
 
   useEffect(() => {

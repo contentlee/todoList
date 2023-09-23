@@ -1,11 +1,6 @@
 import { useNavigate } from "react-router";
-import { useMutation } from "react-query";
-import { useRecoilState, useResetRecoilState } from "recoil";
 
-import { logout, removeUser } from "@api/user";
-
-import { userAtom } from "@atoms/userAtom";
-import { alertAtom } from "@atoms/stateAtom";
+import { useLogout, useRemoveUser } from "@api/user";
 
 import { palette } from "@utils/palette";
 
@@ -14,11 +9,13 @@ import { Button } from "@components/common";
 const UserBodyContainer = () => {
   const navigate = useNavigate();
 
-  const [_, setAlert] = useRecoilState(alertAtom);
-  const resetUser = useResetRecoilState(userAtom);
+  const { mutate: logoutMutate } = useLogout();
+  const { mutate: removeUserMutate } = useRemoveUser();
 
-  const { mutate: logoutMutate } = useMutation(logout);
-  const { mutate: removeUserMutate } = useMutation(removeUser);
+  const handleClickUserChart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate("/mypage/chart");
+  };
 
   const handleClickUserCategory = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,30 +29,12 @@ const UserBodyContainer = () => {
 
   const handleClickRemoveUser = (e: React.MouseEvent) => {
     e.preventDefault();
-    removeUserMutate("", {
-      onSuccess: () => {
-        resetUser();
-        navigate("/");
-        setAlert({ isOpened: true, type: "success", children: "사용자의 정보가 모두 삭제되었습니다." });
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "error", children: "요청이 실패하였습니다." });
-      },
-    });
+    removeUserMutate();
   };
 
   const handleClickLogout = (e: React.MouseEvent) => {
     e.preventDefault();
-    logoutMutate("", {
-      onSuccess: () => {
-        resetUser();
-        navigate("/");
-        setAlert({ isOpened: true, type: "success", children: "로그아웃에 성공하였습니다." });
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "success", children: "로그아웃에 실패하였습니다." });
-      },
-    });
+    logoutMutate();
   };
   return (
     <div
@@ -83,7 +62,7 @@ const UserBodyContainer = () => {
         >
           사용자 정보
         </span>
-        <Button>사용자 통계</Button>
+        <Button onClick={handleClickUserChart}>사용자 통계</Button>
       </div>
       <div
         css={{

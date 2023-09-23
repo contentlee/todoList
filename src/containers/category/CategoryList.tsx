@@ -1,19 +1,23 @@
-import { ResCategory, deleteCategory, getCategories, resisterCategory } from "@api/category";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+
+import DeleteIcon from "@assets/delete_icon.svg";
+
+import { ResCategory, useDeleteCategory, useGetCategories, useRegisterCategory } from "@api/category";
+
 import { alertAtom } from "@atoms/stateAtom";
+
+import { palette } from "@utils/palette";
+
 import { Button, Icon, Input } from "@components/common";
 import { ListContent, ListItem, ListLayout } from "@components/list";
-import { palette } from "@utils/palette";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
-import { useRecoilState } from "recoil";
-import DeleteIcon from "@assets/delete_icon.svg";
 
 const CategoryList = () => {
   const [_, setAlert] = useRecoilState(alertAtom);
 
-  const { data, refetch } = useQuery("category", () => getCategories());
-  const { mutate: resisterMutate } = useMutation(resisterCategory);
-  const { mutate: deleteMutate } = useMutation(deleteCategory);
+  const { data } = useGetCategories();
+  const { mutate: resisterMutate } = useRegisterCategory();
+  const { mutate: deleteMutate } = useDeleteCategory();
   const [categories, setCategories] = useState<ResCategory[]>([]);
 
   const handleAddCategory = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -23,31 +27,12 @@ const CategoryList = () => {
     if (categories.findIndex((v) => v.name === category) >= 0)
       return setAlert({ isOpened: true, type: "warning", children: "중복된 이름이 존재합니다." });
 
-    resisterMutate(
-      { category },
-      {
-        onSuccess: () => {
-          setAlert({ isOpened: true, type: "success", children: "데이터를 추가하는데 성공하였습니다." });
-          refetch();
-        },
-        onError: () => {
-          setAlert({ isOpened: true, type: "error", children: "데이터를 추가하는데 실패하였습니다." });
-        },
-      }
-    );
+    resisterMutate({ category });
   };
 
   const handleClickDelete = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    deleteMutate(id, {
-      onSuccess: () => {
-        setAlert({ isOpened: true, type: "success", children: "데이터를 삭제하는데 성공하였습니다." });
-        refetch();
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "error", children: "데이터를 삭제하는데 실패하였습니다." });
-      },
-    });
+    deleteMutate(id);
   };
 
   useEffect(() => {

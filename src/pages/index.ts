@@ -5,6 +5,7 @@ import EditTodoPage from "./EditTodoPage";
 import LoginPage from "./LoginPage";
 import TodoListPage from "./TodoListPage";
 import UserCategoryPage from "./UserCategoryPage";
+import UserChartPage from "./UserChartPage";
 import UserMapPage from "./UserMapPage";
 import UserPage from "./UserPage";
 
@@ -16,6 +17,7 @@ export {
   LoginPage,
   TodoListPage,
   UserCategoryPage,
+  UserChartPage,
   UserMapPage,
   UserPage,
 };

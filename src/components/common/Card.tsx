@@ -10,7 +10,6 @@ const Card = ({ type = "todo", children, ...props }: Props) => {
   return (
     <div
       css={{
-        zIndex: 1000,
         position: "relative",
         display: "flex",
         flexDirection: "column",

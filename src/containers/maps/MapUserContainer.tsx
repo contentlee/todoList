@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import { Place, Position } from "@atoms/mapAtom";
 import { alertAtom } from "@atoms/stateAtom";
 
-import { ResPlace, deletePlace, getPlaces, resisterPlace } from "@api/place";
+import { ResPlace, useDeletePlace, useGetPlaces, useRegisterPlace } from "@api/place";
 
 import { Button, Form, Icon, Input } from "@components/common";
 import { Map } from "@components/maps";
@@ -24,9 +24,9 @@ interface Props {
 const MapUserContainer = ({ value }: Props) => {
   const [_, setAlert] = useRecoilState(alertAtom);
 
-  const { data, refetch } = useQuery("places", () => getPlaces());
-  const { mutate: resisterMutate } = useMutation(resisterPlace);
-  const { mutate: deleteMutate } = useMutation(deletePlace);
+  const { data } = useGetPlaces();
+  const { mutate: resisterMutate } = useRegisterPlace();
+  const { mutate: deleteMutate } = useDeletePlace();
 
   const [name, setName] = useState<string>();
   const [selected, setSelected] = useState<Position>();
@@ -78,32 +78,13 @@ const MapUserContainer = ({ value }: Props) => {
       return setAlert({ isOpened: true, type: "warning", children: "중복된 장소가 존재합니다." });
 
     if (selected && name) {
-      resisterMutate(
-        { place: { name, marker: "A", ...selected } },
-        {
-          onSuccess: () => {
-            setAlert({ isOpened: true, type: "success", children: "장소가 등록되었습니다." });
-            refetch();
-          },
-          onError: () => {
-            setAlert({ isOpened: true, type: "error", children: "장소 등록에 실패하였습니다." });
-          },
-        }
-      );
+      resisterMutate({ place: { name, marker: "A", ...selected } });
     }
   };
 
   const handleClickDelete = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    deleteMutate(id, {
-      onSuccess: () => {
-        setAlert({ isOpened: true, type: "success", children: "장소가 삭제되었습니다." });
-        refetch();
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "error", children: "장소 삭제에 실패하였습니다." });
-      },
-    });
+    deleteMutate(id);
   };
 
   useEffect(() => {

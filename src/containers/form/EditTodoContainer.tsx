@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import { editTodo, getTodo } from "@api/todo";
+import { useEditTodo, useGetTodo } from "@api/todo";
 
 import { alertAtom } from "@atoms/stateAtom";
 import { placeAtomFamily } from "@atoms/mapAtom";
@@ -21,9 +20,9 @@ const EditTodoContainer = () => {
 
   const { name, lat, lng } = useRecoilValue(placeAtomFamily("form"));
 
-  const { data, isError, isSuccess, refetch } = useQuery(["todo", "getItem"], () => getTodo(date!, id!));
+  const { data, isError, isSuccess, refetch } = useGetTodo(date!, id!);
 
-  const { mutate } = useMutation(editTodo);
+  const { mutate } = useEditTodo(() => navigate("/"));
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,18 +51,7 @@ const EditTodoContainer = () => {
     const [_, req] = compareObjects(obj1, obj2);
 
     if (Object.keys(req).length !== 0) {
-      mutate(
-        { id: id!, todo: req },
-        {
-          onSuccess: () => {
-            navigate("/");
-            setAlert({ isOpened: true, type: "success", children: "데이터 수정에 성공하였습니다." });
-          },
-          onError: () => {
-            setAlert({ isOpened: true, type: "error", children: "데이터 수정에 실패하였습니다." });
-          },
-        }
-      );
+      mutate({ id: id!, todo: req });
     } else {
       navigate("/");
     }

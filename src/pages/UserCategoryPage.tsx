@@ -1,12 +1,10 @@
-import { PageLayout, SubText, Title } from "@components/common";
-import { CategoryList } from "@containers/category";
+import { PageLayout } from "@components/common";
+import { CategoryList, CategoryrHead } from "@containers/category";
 
 const UserCategoryPage = () => {
   return (
     <PageLayout css={{ gap: "10px" }}>
-      <Title>
-        카테고리 설정 <SubText>등록된 카테고리를 관리합니다.</SubText>
-      </Title>
+      <CategoryrHead></CategoryrHead>
       <CategoryList></CategoryList>
     </PageLayout>
   );

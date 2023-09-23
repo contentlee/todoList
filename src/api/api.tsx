@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useMutation } from "react-query";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 
 import { userAtom } from "@atoms/userAtom";
 
-import { refresh } from "./user";
+import { useRefresh } from "./user";
 
 export const http = axios.create({
   baseURL: "/api",
@@ -23,10 +22,13 @@ interface Props {
 const HttpProvider = ({ children }: Props) => {
   const navigate = useNavigate();
 
-  const [userInfo, setUser] = useRecoilState(userAtom);
+  const userInfo = useRecoilValue(userAtom);
 
   const resetUser = useResetRecoilState(userAtom);
-  const { mutate } = useMutation(refresh);
+  const { mutate } = useRefresh(() => {
+    resetUser();
+    navigate("/");
+  });
 
   const reqIntercepter = http.interceptors.request.use((config) => {
     if (userInfo.access_token) {
@@ -37,27 +39,19 @@ const HttpProvider = ({ children }: Props) => {
 
   const resInterceptor = http.interceptors.response.use(
     <T,>(config: AxiosResponse<T, any>): T | AxiosResponse => {
-      if (config.data) return config.data;
+      if (config.data) {
+        return config.data;
+      }
       return config;
     },
     (err: AxiosError) => {
-      if (err.code === "401") {
+      if (err.response?.status === 401) {
         resetUser();
         navigate("/");
       }
-      if (err.code === "403") {
-        mutate("", {
-          onSuccess: ({ access_token, email, name }) => {
-            if (access_token) {
-              setUser({ access_token, is_logged_in: true, email, name });
-              navigate("/");
-            }
-          },
-          onError: () => {
-            resetUser();
-            navigate("/");
-          },
-        });
+
+      if (err.response?.status === 403) {
+        mutate();
       }
     }
   );

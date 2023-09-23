@@ -31,7 +31,7 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
     setOpened(!isOpened);
   };
   return (
-    <Card type={type}>
+    <Card type={type} css={{ zIndex: 1000 }}>
       {item ? (
         <>
           <div
@@ -60,7 +60,7 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
               }}
             ></Icon>
 
-            {type === "todo" ? (
+            {type === "todo" && (
               <Icon
                 src={HoldIcon}
                 alt="hold"
@@ -69,7 +69,8 @@ const CardContainer = ({ item, type, handleClickEdit, handleClickDelete, handleC
                   resetModal();
                 }}
               ></Icon>
-            ) : (
+            )}
+            {type === "hold" && (
               <Icon
                 src={ReturnIcon}
                 alt="return"

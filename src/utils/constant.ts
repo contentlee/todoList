@@ -22,3 +22,26 @@ export const CONSTANT_STR = {
     title: "보류 중인 할일은",
   },
 };
+
+export const ALERT_MSG = {
+  add: {
+    success: "데이터를 추가하는데 성공하였습니다.",
+    error: "데이터를 추가하는데 실패하였습니다.",
+  },
+  edit: {
+    success: "데이터를 수정하는데 성공하였습니다.",
+    error: "데이터를 수정하는데 실패하였습니다.",
+  },
+  remove: {
+    success: "데이터를 삭제하는데 성공하였습니다.",
+    error: "데이터를 삭제하는데 실패하였습니다.",
+  },
+  login: {
+    success: "로그인에 성공하였습니다.",
+    error: "로그인에 실패하였습니다.",
+  },
+  logout: {
+    success: "로그아웃에 성공하였습니다.",
+    error: "로그아웃에 실패하였습니다.",
+  },
+};

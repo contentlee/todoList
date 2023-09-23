@@ -6,6 +6,7 @@ import { Overlay } from "@components/common";
 
 const CommonPage = () => {
   const { pathname } = useLocation();
+
   return (
     <>
       <Overlay></Overlay>

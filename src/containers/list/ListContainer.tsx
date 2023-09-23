@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 import { calendarAtomFamily } from "@atoms/calendarAtom";
-import { Todo, changeTodoAction, deleteTodoAction, typeAtom } from "@atoms/todoAtom";
-import { alertAtom, modalAtom } from "@atoms/stateAtom";
+import { Todo, typeAtom } from "@atoms/todoAtom";
+import { modalAtom } from "@atoms/stateAtom";
 
 import { CONSTANT_STR } from "@utils/constant";
 import { setArrayToPath } from "@utils/datepiacker";
 
-import { changeTodoState, deleteTodo, getTodos } from "@api/todo";
+import { useChangeTodoState, useDeleteTodo, useGetTodos } from "@api/todo";
 
 import { ListContent, ListLayout, ListTitle } from "@components/list";
 
@@ -24,19 +23,22 @@ import { ErrorContainer } from "@containers/common";
 const ListContainer = () => {
   const navigate = useNavigate();
 
-  const [_, setAlert] = useRecoilState(alertAtom);
   const [modal, setModal] = useRecoilState(modalAtom);
   const resetModal = useResetRecoilState(modalAtom);
 
   const type = useRecoilValue(typeAtom);
   const selectedDate = useRecoilValue(calendarAtomFamily("todoList"));
 
-  const { data, isError, isSuccess, refetch } = useQuery(["todo", "getList"], () =>
-    getTodos(setArrayToPath([selectedDate.year, selectedDate.month, selectedDate.day]))
+  const { data, isError, isSuccess, refetch } = useGetTodos(
+    setArrayToPath([selectedDate.year, selectedDate.month, selectedDate.day])
   );
 
-  const { mutate: changeStateMutate } = useMutation(changeTodoState);
-  const { mutate: deleteMutate } = useMutation(deleteTodo);
+  const { mutate: changeStateMutate } = useChangeTodoState(() => {
+    resetModal();
+  });
+  const { mutate: deleteMutate } = useDeleteTodo(() => {
+    resetModal();
+  });
 
   const [store, setStore] = useState<Todo[]>([]);
   const [curItem, setCurItem] = useState<Todo>();
@@ -62,32 +64,10 @@ const ListContainer = () => {
     navigate(`edit/${setArrayToPath([selectedDate.year, selectedDate.month, selectedDate.day])}/${id}`);
 
   const handleChangeState = (id: string, type: "todo" | "hold" | "complete", val: boolean) => {
-    changeStateMutate(
-      { id, type, val },
-      {
-        onSuccess: () => {
-          setStore(changeTodoAction(id, type, val));
-          setAlert({ isOpened: true, type: "success", children: "데이터 변경에 성공하였습니다." });
-          resetModal();
-        },
-        onError: () => {
-          setAlert({ isOpened: true, type: "error", children: "데이터 변경에 실패하였습니다." });
-        },
-      }
-    );
+    changeStateMutate({ id, type, val });
   };
 
-  const handleClickDelete = (id: string) =>
-    deleteMutate(id, {
-      onSuccess: () => {
-        setStore(deleteTodoAction(id));
-        setAlert({ isOpened: true, type: "success", children: "데이터 삭제에 성공하였습니다." });
-        resetModal();
-      },
-      onError: () => {
-        setAlert({ isOpened: true, type: "error", children: "데이터 삭제에 실패하였습니다." });
-      },
-    });
+  const handleClickDelete = (id: string) => deleteMutate(id);
 
   useEffect(() => {
     if (data) {

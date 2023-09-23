@@ -7,7 +7,7 @@ import { alertAtom, modalAtom } from "@atoms/stateAtom";
 import { Button, Input, Select } from "@components/common";
 import { Map, MapLayout } from "@components/maps";
 import { useMutation, useQuery } from "react-query";
-import { ResPlace, getPlaces, resisterPlace } from "@api/place";
+import { ResPlace, useGetPlaces, useRegisterPlace } from "@api/place";
 
 interface Props {
   id: string;
@@ -22,8 +22,8 @@ const MapFormContaienr = ({ id, value }: Props) => {
   const resetPlace = useResetRecoilState(placeAtomFamily(id));
   const [__, setPlace] = useRecoilState(placeAtomFamily(id));
 
-  const { data, refetch } = useQuery("places", () => getPlaces());
-  const { mutate } = useMutation(resisterPlace);
+  const { data } = useGetPlaces();
+  const { mutate } = useRegisterPlace();
 
   const [name, setName] = useState<string>();
   const [selected, setSelected] = useState<Position>();
@@ -80,7 +80,7 @@ const MapFormContaienr = ({ id, value }: Props) => {
     resetModal();
   };
 
-  const handleClickResister = (e: React.MouseEvent) => {
+  const handleClickRegister = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!selected) return setAlert({ isOpened: true, type: "warning", children: "위치가 선택되지 않았습니다." });
     if (!name) return setAlert({ isOpened: true, type: "warning", children: "이름을 입력해주세요." });
@@ -92,18 +92,7 @@ const MapFormContaienr = ({ id, value }: Props) => {
       return setAlert({ isOpened: true, type: "warning", children: "중복된 장소가 존재합니다." });
 
     if (selected && name) {
-      mutate(
-        { place: { name, marker: "A", ...selected } },
-        {
-          onSuccess: () => {
-            setAlert({ isOpened: true, type: "success", children: "장소가 등록되었습니다." });
-            refetch();
-          },
-          onError: () => {
-            setAlert({ isOpened: true, type: "error", children: "장소 등록에 실패하였습니다." });
-          },
-        }
-      );
+      mutate({ place: { name, marker: "A", ...selected } });
     }
   };
 
@@ -162,7 +151,7 @@ const MapFormContaienr = ({ id, value }: Props) => {
           확인
         </Button>
       </div>
-      <Button variant="secondary" css={{ width: "100%" }} onClick={handleClickResister}>
+      <Button variant="secondary" css={{ width: "100%" }} onClick={handleClickRegister}>
         내장소 등록
       </Button>
       <Button variant="reset" css={{ width: "100%" }} onClick={handleClickReset}>

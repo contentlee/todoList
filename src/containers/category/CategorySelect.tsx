@@ -1,8 +1,7 @@
 import { HTMLAttributes, useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 
-import { getCategories, resisterCategory } from "@api/category";
+import { useGetCategories, useRegisterCategory } from "@api/category";
 
 import { alertAtom } from "@atoms/stateAtom";
 
@@ -15,9 +14,9 @@ interface Props extends HTMLAttributes<typeof Select> {
 const CategorySelect = ({ value }: Props) => {
   const [_, setAlert] = useRecoilState(alertAtom);
 
-  const { data, refetch } = useQuery("category", () => getCategories());
+  const { data } = useGetCategories();
 
-  const { mutate } = useMutation(resisterCategory);
+  const { mutate } = useRegisterCategory();
 
   const [options, setOptions] = useState<string[]>([]);
 
@@ -27,18 +26,7 @@ const CategorySelect = ({ value }: Props) => {
     if (options.includes(category))
       return setAlert({ isOpened: true, type: "warning", children: "중복된 이름이 존재합니다." });
 
-    mutate(
-      { category },
-      {
-        onSuccess: () => {
-          setAlert({ isOpened: true, type: "success", children: "데이터를 추가하는데 성공하였습니다." });
-          refetch();
-        },
-        onError: () => {
-          setAlert({ isOpened: true, type: "error", children: "데이터를 추가하는데 실패하였습니다." });
-        },
-      }
-    );
+    mutate({ category });
   };
 
   useEffect(() => {

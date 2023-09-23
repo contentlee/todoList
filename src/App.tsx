@@ -14,6 +14,7 @@ import {
   TodoListPage,
   UserPage,
   UserMapPage,
+  UserChartPage,
 } from "@pages";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/edit/:date/:id" element={<EditTodoPage />}></Route>
             <Route path="/alarm" element={<AlarmPage />}></Route>
             <Route path="/mypage" element={<UserPage></UserPage>} />
+            <Route path="/mypage/chart" element={<UserChartPage></UserChartPage>} />
             <Route path="/mypage/category" element={<UserCategoryPage></UserCategoryPage>} />
             <Route path="/mypage/map" element={<UserMapPage></UserMapPage>} />
             <Route path="*" element={<Navigate replace to="/" />} />
