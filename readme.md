@@ -105,7 +105,7 @@ src
 - Todo 에 대한 CRUD 기능을 제공하고 있습니다.
   - Todo Type(todo, complete, hold)에 따라 색상을 다르게 표현하고 있습니다. 이를 위해 Todo Type을 전역으로 관리하고 있습니다.
   - Todo를 통해 다양한 내용을 전달하고자 구성했습니다.
-  - 
+    
 ## Next Progress
 
 - 기능 추가
