@@ -98,15 +98,13 @@ src
 - Google OAuth API를 통한 Login을 제공하고 있습니다.
   - 권한 부여 승인 코드 방식(Authorization Code Grant)에 가깝게 구현했습니다.
   - access token의 경우 브라우저의 메모리(전역변수)에 저장하며, refresh token을 서버에서 Cookie로 전달하고 있습니다.
-    → HttpOnly 설정을 할 예정이지만, 자동 로그인과 관련된 요청을 자동화하는 부분 리팩토링 필요
-    \*\*\*\* → 전역변수로 Access Token이 관리되다 보니, 새로고침 시의 상황에 대한 부분 리팩토링 필요
+   <br/> → HttpOnly 설정을 할 예정이지만, 자동 로그인과 관련된 요청을 자동화하는 부분 리팩토링 필요
+   <br/> → 전역변수로 Access Token이 관리되다 보니, 새로고침 시의 상황에 대한 부분 리팩토링 필요
 - Calendar UI를 직접 구현하여 제공하고 있습니다.
   - Recoil을 통해 각각의 DatePicker나 Calendar가 상태를 관리할 수 있도록 하고 있습니다. (Atom Family 사용)
 - Todo 에 대한 CRUD 기능을 제공하고 있습니다.
   - Todo Type(todo, complete, hold)에 따라 색상을 다르게 표현하고 있습니다. 이를 위해 Todo Type을 전역으로 관리하고 있습니다.
   - Todo를 통해 다양한 내용을 전달하고자 구성했습니다.
-    → 장소, 카테고리 기능을 추가할 예정
-
 ## Next Progress
 
 - 기능 추가
