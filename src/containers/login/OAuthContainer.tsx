@@ -17,7 +17,7 @@ const OAuthContainer = () => {
 
   const googleSocialLogin = useGoogleLogin({
     scope: "email profile",
-    onSuccess: async ({ code }) => {
+    onSuccess: ({ code }) => {
       loginMutate(code);
     },
     onError: () => {

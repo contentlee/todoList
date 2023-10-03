@@ -5,9 +5,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+import HttpProvider from "@api/api.tsx";
 import App from "./App.tsx";
 import "./index.css";
-import HttpProvider from "@api/api.tsx";
 
 const queryClient = new QueryClient();
 const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
