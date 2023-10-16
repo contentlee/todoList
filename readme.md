@@ -4,6 +4,9 @@
 
 할 일을 기록하는 웹 앱입니다. 현재 모바일 웹을 기준으로 개발하고 있으며, 추후 기능과 함께 웹 버전이 추가될 예정입니다.
 
+![todo_list](https://i.ibb.co/mDXyYpT/todo-list1.png)
+![todo_list](https://i.ibb.co/Cz8cX03/todo-list2.png)
+[영상으로 보기](https://youtu.be/wxvBigOYb2E)
 ## Enviroment
 
 - Node.js 18.12.1
