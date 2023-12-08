@@ -31,6 +31,7 @@ const TextChart = ({ title, description, values }: Props) => {
         {values.map((value, i) => {
           return (
             <div
+              key={i}
               css={{
                 display: "flex",
                 flexDirection: "column",

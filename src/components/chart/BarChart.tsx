@@ -17,6 +17,7 @@ const BarChart = ({ description, values }: Props) => {
       {values.map((value, i) => {
         return (
           <div
+            key={i}
             css={{
               position: "relative",
               display: "flex",

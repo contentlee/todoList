@@ -3,10 +3,10 @@ import { palette } from "@utils/palette";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
-  state?: "basic" | "selected" | "current";
+  state?: "non_selected" | "selected" | "current";
 }
 
-const MonthComponent = ({ state = "basic", children, ...props }: Props) => {
+const MonthComponent = ({ state = "non_selected", children, ...props }: Props) => {
   return (
     <div
       css={{
@@ -37,7 +37,7 @@ const MonthComponent = ({ state = "basic", children, ...props }: Props) => {
 };
 
 const STATE_VARIANTS = {
-  basic: {
+  non_selected: {
     color: palette.gray500,
     backgroundColor: palette.white,
   },

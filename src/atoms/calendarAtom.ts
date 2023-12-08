@@ -1,7 +1,7 @@
 import { atomFamily } from "recoil";
 import { makeDate } from "@utils/datepiacker";
 
-interface Calendar {
+export interface Calendar {
   year: number;
   month: number;
   day: number;

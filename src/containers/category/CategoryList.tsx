@@ -9,8 +9,9 @@ import { alertAtom } from "@atoms/stateAtom";
 
 import { palette } from "@utils/palette";
 
-import { Button, Icon, Input } from "@components/common";
+import { Icon } from "@components/common";
 import { ListContent, ListItem, ListLayout } from "@components/list";
+import CategoryRegister from "./CategoryRegister";
 
 const CategoryList = () => {
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -18,13 +19,14 @@ const CategoryList = () => {
   const { data } = useGetCategories();
   const { mutate: resisterMutate } = useRegisterCategory();
   const { mutate: deleteMutate } = useDeleteCategory();
+
   const [categories, setCategories] = useState<ResCategory[]>([]);
 
   const handleAddCategory = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     const category = (e.currentTarget[0] as HTMLInputElement).value;
     if (!category) return setAlert({ isOpened: true, type: "warning", children: "이름을 입력해주세요." });
-    if (categories.findIndex((v) => v.name === category) >= 0)
+    if (categories.some((v) => v.name === category))
       return setAlert({ isOpened: true, type: "warning", children: "중복된 이름이 존재합니다." });
 
     resisterMutate({ category });
@@ -36,40 +38,12 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
-    if (data) {
-      setCategories(data.category);
-    }
+    if (data) setCategories(data.category);
   }, [data]);
+
   return (
     <ListLayout>
-      <form
-        onSubmit={handleAddCategory}
-        css={{ display: "flex", flexDirection: "column", width: "100%", margin: "8px 0", gap: "8px" }}
-      >
-        <div
-          css={{
-            paddingLeft: "4px",
-
-            fontSize: "12px",
-            color: palette.gray200,
-          }}
-        >
-          키테고리 등록
-        </div>
-        <Input label="이름"></Input>
-        <div
-          css={{
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "4px",
-          }}
-        >
-          <Button type="submit">확인</Button>
-          <Button type="reset" variant="secondary">
-            취소
-          </Button>
-        </div>
-      </form>
+      <CategoryRegister handleAddCategory={handleAddCategory} />
 
       <hr
         css={{

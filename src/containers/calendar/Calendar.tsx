@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 
-import ArrowIcon from "@assets/arrow_icon.svg";
-
-import { DAY_OF_WEEK } from "@utils/constant";
-import { makeDate, makeDateList, makeDay, setArrayToText, setDateProps } from "@utils/datepiacker";
+import { makeDate } from "@utils/datepiacker";
 
 import { calendarAtomFamily } from "@atoms/calendarAtom";
 import { modalAtom } from "@atoms/stateAtom";
 
-import { Icon } from "@components/common";
-import {
-  DateComponent,
-  DayComponent,
-  CalendarLayout,
-  MonthComponent,
-  CalendarHead,
-  CalendarTitle,
-  CalendarBody,
-} from "@components/calendar";
+import { CalendarLayout } from "@components/calendar";
+
+import MonthCalendar from "./MonthCalendar";
+import DateCalendar from "./DateCalendar";
 
 interface Props {
   id: string;
@@ -35,11 +26,6 @@ const Calendar = ({ id }: Props) => {
   // 선택된 연도, 달
   const [year, setYear] = useState<number>(selected.year);
   const [month, setMonth] = useState<number[]>([selected.year, selected.month]);
-
-  // 캘린더를 통해 표기될 날짜들 리스트
-  const dateList = makeDateList(month);
-  // 현재 표시되는 달, 첫날의 요일
-  const day = makeDay([...month, 1]);
 
   const handleClickTitle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -76,81 +62,22 @@ const Calendar = ({ id }: Props) => {
   return (
     <CalendarLayout>
       {calendarType === "Date" && (
-        <>
-          <CalendarHead>
-            <Icon
-              src={ArrowIcon}
-              css={{
-                transform: "rotate(180deg)",
-              }}
-              onClick={(e) => handleClickArrow(e, -1)}
-            ></Icon>
-            <CalendarTitle handleOnClick={handleClickTitle}>{setArrayToText(month)}</CalendarTitle>
-            <Icon src={ArrowIcon} onClick={(e) => handleClickArrow(e, 1)}></Icon>
-          </CalendarHead>
-          <CalendarBody>
-            {DAY_OF_WEEK.map((day) => {
-              return <DayComponent key={day}>{day}</DayComponent>;
-            })}
-
-            {dateList.map((dates, i) => {
-              return dates.map((date) => {
-                // 현재 설정된 달 표기의 경우
-                if (i === 1) {
-                  const [state, type] = setDateProps([...month, date], day, [
-                    selected.year,
-                    selected.month,
-                    selected.day,
-                  ]);
-                  return (
-                    <DateComponent
-                      key={`${month[1]}${date}`}
-                      state={state}
-                      type={type}
-                      onClick={(e) => handleClickDate(e, date)}
-                    >
-                      {date}
-                    </DateComponent>
-                  );
-                }
-
-                // 이전달 혹은 다음달 표기의 경우
-                return (
-                  <DateComponent key={date} type="etc">
-                    {date}
-                  </DateComponent>
-                );
-              });
-            })}
-          </CalendarBody>
-        </>
+        <DateCalendar
+          selected={selected}
+          month={month}
+          handleClickTitle={handleClickTitle}
+          handleClickArrow={handleClickArrow}
+          handleClickDate={handleClickDate}
+        />
       )}
 
       {calendarType === "Month" && (
-        <>
-          <CalendarHead>
-            <Icon
-              src={ArrowIcon}
-              css={{
-                transform: "rotate(180deg)",
-              }}
-              onClick={(e) => handleClickArrow(e, -12)}
-            ></Icon>
-            <CalendarTitle>{month[0]}</CalendarTitle>
-            <Icon src={ArrowIcon} onClick={(e) => handleClickArrow(e, 12)}></Icon>
-          </CalendarHead>
-
-          <CalendarBody>
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((m, i) => {
-              const state = year === month[0] && m === month[1] ? "selected" : "basic";
-              return (
-                <MonthComponent key={i} state={state} onClick={(e) => handleClickMonth(e, m)}>
-                  {m}월
-                </MonthComponent>
-              );
-            })}
-          </CalendarBody>
-        </>
+        <MonthCalendar
+          year={year}
+          month={month}
+          handleClickArrow={handleClickArrow}
+          handleClickMonth={handleClickMonth}
+        />
       )}
     </CalendarLayout>
   );

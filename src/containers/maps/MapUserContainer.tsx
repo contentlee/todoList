@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { useMutation, useQuery } from "react-query";
 
 import { Place, Position } from "@atoms/mapAtom";
 import { alertAtom } from "@atoms/stateAtom";

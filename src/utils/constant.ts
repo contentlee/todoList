@@ -1,7 +1,3 @@
-export const DAY_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-
-export const TYPE_STR: ("todo" | "complete" | "hold")[] = ["todo", "complete", "hold"];
-
 export const CONSTANT_STR = {
   todo: {
     type: "todo",

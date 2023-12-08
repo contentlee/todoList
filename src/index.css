@@ -41,10 +41,29 @@ input {
 }
 
 div::-webkit-scrollbar {
+  width: 8px;
   background-color: transparent;
 }
 
 div::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+main::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+main::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+form::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+form::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: rgba(0, 0, 0, 0.1);
 }

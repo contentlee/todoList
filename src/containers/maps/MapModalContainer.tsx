@@ -6,7 +6,7 @@ import { alertAtom, modalAtom } from "@atoms/stateAtom";
 
 import { Button, Input, Select } from "@components/common";
 import { Map, MapLayout } from "@components/maps";
-import { useMutation, useQuery } from "react-query";
+
 import { ResPlace, useGetPlaces, useRegisterPlace } from "@api/place";
 
 interface Props {

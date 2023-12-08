@@ -1,8 +1,8 @@
-import { TYPE_STR } from "@utils/constant";
-
 import { ListContainer, ListTabContainer } from "@containers/list";
 import { DatePicker } from "@containers/calendar";
 import { PageLayout } from "@components/common";
+
+const TYPE_STR: ("todo" | "complete" | "hold")[] = ["todo", "complete", "hold"];
 
 const TodoListPage = () => {
   return (
