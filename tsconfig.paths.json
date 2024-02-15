@@ -5,13 +5,9 @@
       "@api/*": ["src/api/*"],
       "@assets/*": ["src/assets/*"],
       "@atoms/*": ["src/atoms/*"],
-      "@components/*": ["src/components/*"],
-      "@containers/*": ["src/containers/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@lib/*": ["src/lib/*"],
-      "@pages": ["src/pages/"],
+      "@components": ["src/common/components"],
       "@utils/*": ["src/utils/*"],
-      "@helpers/*": ["src/helpers/*"]
+      "@/*": ["src/*"]
     }
   }
 }

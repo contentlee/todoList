@@ -1,15 +1,6 @@
 import { atomFamily } from "recoil";
 import { produce } from "immer";
-
-export interface Position {
-  lat: number;
-  lng: number;
-}
-
-export interface Place extends Position {
-  marker: string;
-  name: string;
-}
+import { Place } from "@utils/types/place";
 
 export const placeAtomFamily = atomFamily<Place, string>({
   key: "placeAtomFamily",

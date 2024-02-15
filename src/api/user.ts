@@ -4,52 +4,12 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 
 import { http } from "./api";
 
-import { alertAtom } from "@atoms/stateAtom";
+import { alertAtom } from "@atoms/alertAtom";
 import { userAtom } from "@atoms/userAtom";
 import { ALERT_MSG } from "@utils/constant";
-
-export interface TokenResponse {
-  email: string;
-  name: string;
-  access_token: string;
-}
-
-export interface ChartResponse {
-  total_length: number;
-  y: {
-    total: number;
-    total_completed: number;
-    total_uncompleted: number;
-    total_held: number;
-  };
-  m: {
-    total: number;
-    total_completed: number;
-    total_uncompleted: number;
-    total_held: number;
-  };
-
-  d: {
-    total: number;
-    total_completed: number;
-    total_uncompleted: number;
-    total_held: number;
-  };
-  used_date: number;
-  average_completed: number;
-  average_held: number;
-  average_uncompleted: number;
-  total_completed: number;
-  total_held: number;
-}
+import { ChartResponse, TokenResponse } from "@utils/types/user";
 
 const login = async (credential: string): Promise<TokenResponse> => await http.post("login/", { credential });
-const logout = async () => await http.post("login/logout/");
-const refresh = async (): Promise<TokenResponse> => await http.post("login/refresh/");
-
-const removeUser = async () => await http.delete("user/remove");
-const getUserChartAll = async (): Promise<ChartResponse> => await http.get("user/chart/all");
-
 export const useLogin = (successAction = () => {}) => {
   const [_, setAlert] = useRecoilState(alertAtom);
   const [__, setUser] = useRecoilState(userAtom);
@@ -66,6 +26,7 @@ export const useLogin = (successAction = () => {}) => {
   });
 };
 
+const logout = async () => await http.post("login/logout/");
 export const useLogout = (successAction = () => {}) => {
   const navigate = useNavigate();
 
@@ -85,6 +46,7 @@ export const useLogout = (successAction = () => {}) => {
   });
 };
 
+const refresh = async (): Promise<TokenResponse> => await http.post("login/refresh/");
 export const useRefresh = (errorAction = () => {}) => {
   const navigate = useNavigate();
   const [__, setUser] = useRecoilState(userAtom);
@@ -103,6 +65,7 @@ export const useRefresh = (errorAction = () => {}) => {
   });
 };
 
+const removeUser = async () => await http.delete("user/remove");
 export const useRemoveUser = () => {
   const navigate = useNavigate();
 
@@ -121,6 +84,7 @@ export const useRemoveUser = () => {
   });
 };
 
+const getUserChartAll = async (): Promise<ChartResponse> => await http.get("user/chart/all");
 export const useGetChartAll = () => {
   return useQuery(["chart", "all"], () => getUserChartAll());
 };

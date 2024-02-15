@@ -7,6 +7,7 @@
 ![todo_list](https://i.ibb.co/mDXyYpT/todo-list1.png)
 ![todo_list](https://i.ibb.co/Cz8cX03/todo-list2.png)
 [영상으로 보기](https://youtu.be/wxvBigOYb2E)
+
 ## Enviroment
 
 - Node.js 18.12.1
@@ -15,6 +16,15 @@
 ```jsx
 $ yarn install
 $ yarn start
+```
+
+```
+* You need .env File
+VITE_GOOGLE_CLIENT_ID=
+VITE_GOOGLE_REDIRECT_URL=
+VITE_AUTH_CODE=
+VITE_GOOGLE_MAPS_API_KEY=
+VITE_SERVER_URL=
 ```
 
 ## Stack
@@ -61,7 +71,6 @@ $ yarn start
 
 ## Folder Structure
 
-- Main Design Pattern : Container-Presenter Pattern
 - Folder Description
   - api : http 요청을 위한 기본 설정과 비지니스 로직에 필요한 api를 관리합니다.
   - assets : 아이콘, 이미지 등과 같은 정적 파일을 담고 있습니다.
@@ -101,13 +110,14 @@ src
 - Google OAuth API를 통한 Login을 제공하고 있습니다.
   - 권한 부여 승인 코드 방식(Authorization Code Grant)에 가깝게 구현했습니다.
   - access token의 경우 브라우저의 메모리(전역변수)에 저장하며, refresh token을 서버에서 Cookie로 전달하고 있습니다.
-   <br/> → HttpOnly 설정을 할 예정이지만, 자동 로그인과 관련된 요청을 자동화하는 부분 리팩토링 필요
-   <br/> → 전역변수로 Access Token이 관리되다 보니, 새로고침 시의 상황에 대한 부분 리팩토링 필요
+    <br/> → HttpOnly 설정을 할 예정이지만, 자동 로그인과 관련된 요청을 자동화하는 부분 리팩토링 필요
+    <br/> → 전역변수로 Access Token이 관리되다 보니, 새로고침 시의 상황에 대한 부분 리팩토링 필요
 - Calendar UI를 직접 구현하여 제공하고 있습니다.
   - Recoil을 통해 각각의 DatePicker나 Calendar가 상태를 관리할 수 있도록 하고 있습니다. (Atom Family 사용)
 - Todo 에 대한 CRUD 기능을 제공하고 있습니다.
   - Todo Type(todo, complete, hold)에 따라 색상을 다르게 표현하고 있습니다. 이를 위해 Todo Type을 전역으로 관리하고 있습니다.
   - Todo를 통해 다양한 내용을 전달하고자 구성했습니다.
+
 ## Next Progress
 
 - 기능 추가

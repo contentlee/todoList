@@ -3,33 +3,21 @@ import { useRecoilState } from "recoil";
 
 import { http } from "./api";
 
-import { alertAtom } from "@atoms/stateAtom";
+import { alertAtom } from "@atoms/alertAtom";
 import { ALERT_MSG } from "@utils/constant";
+import { Categories } from "@utils/types/category";
 
-export interface ResCategory {
-  id: string;
-  name: string;
-}
-
-export interface ReqpCategory {
-  category: string;
-}
-
-export interface ResCategories {
-  email: string;
-  category: ResCategory[];
-}
-
-const getCategories = async (): Promise<ResCategories> => await http.get("category/");
-const registerCategory = async (category: ReqpCategory) => await http.post("category/add", category);
-const deleteCategory = async (id: string) => await http.delete(`category/delete/${id}`);
-
+const getCategories = async (): Promise<Categories> => await http.get("category/");
 export const useGetCategories = () => {
   return useQuery("category", () => getCategories(), {
     onError: () => {},
   });
 };
 
+export interface Request {
+  category: string;
+}
+const registerCategory = async (category: Request) => await http.post("category/add", category);
 export const useRegisterCategory = () => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -45,6 +33,7 @@ export const useRegisterCategory = () => {
   });
 };
 
+const deleteCategory = async (id: string) => await http.delete(`category/delete/${id}`);
 export const useDeleteCategory = () => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);

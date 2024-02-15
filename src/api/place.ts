@@ -3,36 +3,22 @@ import { useRecoilState } from "recoil";
 
 import { http } from "./api";
 
-import { alertAtom } from "@atoms/stateAtom";
+import { alertAtom } from "@atoms/alertAtom";
 import { ALERT_MSG } from "@utils/constant";
+import { Places } from "@utils/types/place";
 
-export interface ResPlace {
-  id: string;
-  name: string;
-  marker: string;
-  lat: number;
-  lng: number;
-}
-
-export interface ReqpPlace {
-  place: { name: string; marker: string; lat: number; lng: number };
-}
-
-export interface ResPlaces {
-  email: string;
-  places: ResPlace[];
-}
-
-const getPlaces = async (): Promise<ResPlaces> => await http.get("place/");
-const registerPlace = async (place: ReqpPlace) => await http.post("place/add", place);
-const deletePlace = async (id: string) => await http.delete(`place/delete/${id}`);
-
+const getPlaces = async (): Promise<Places> => await http.get("place/");
 export const useGetPlaces = () => {
   return useQuery("place", () => getPlaces(), {
     onError: () => {},
   });
 };
 
+interface Request {
+  place: { name: string; marker: string; lat: number; lng: number };
+}
+
+const registerPlace = async (place: Request) => await http.post("place/add", place);
 export const useRegisterPlace = () => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -48,6 +34,7 @@ export const useRegisterPlace = () => {
   });
 };
 
+const deletePlace = async (id: string) => await http.delete(`place/delete/${id}`);
 export const useDeletePlace = () => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);

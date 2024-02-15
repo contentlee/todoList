@@ -2,53 +2,25 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
 
 import { http } from "@api/api";
-import { alertAtom } from "@atoms/stateAtom";
+import { alertAtom } from "@atoms/alertAtom";
 import { ALERT_MSG } from "@utils/constant";
-
-export interface BaseTodo {
-  date: string;
-  title: string;
-  content: string;
-  place: {
-    marker: string;
-    name: string;
-    lat: number;
-    lng: number;
-  };
-  category: string;
-}
-
-export interface ReqTodo extends BaseTodo {
-  is_completed: boolean;
-  is_held: boolean;
-}
-
-export interface ResTodo extends ReqTodo {
-  id: string;
-  write_date: string;
-  edit_date: string;
-}
+import { BaseTodo, ReqTodo, ResTodo, TodoState } from "@utils/types/todo";
 
 const getTodo = async (date: string, id: string): Promise<ResTodo> => await http.get(`todo/${date}/${id}`);
-const getTodos = async (date: string): Promise<ResTodo[]> => await http.get(`todo/${date}`);
-const createTodo = async (todo: ReqTodo) => await http.post("todo/add", todo);
-const editTodo = async ({ id, todo }: { id: string; todo: BaseTodo }) => await http.patch(`todo/${id}`, todo);
-const deleteTodo = async (id: string) => await http.delete(`todo/${id}`);
-const changeTodoState = async ({ type, id, val }: { type: "todo" | "hold" | "complete"; id: string; val: boolean }) =>
-  await http.patch(`todo/${type}/${id}`, { val });
-
 export const useGetTodo = (date: string, id: string) => {
   return useQuery("todo", () => getTodo(date, id), {
     onError: () => {},
   });
 };
 
+const getTodos = async (date: string): Promise<ResTodo[]> => await http.get(`todo/${date}`);
 export const useGetTodos = (date: string) => {
   return useQuery("todos", () => getTodos(date), {
     onError: () => {},
   });
 };
 
+const createTodo = async (todo: ReqTodo) => await http.post("todo/add", todo);
 export const useCreateTodo = (successAction = () => {}) => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -65,6 +37,7 @@ export const useCreateTodo = (successAction = () => {}) => {
   });
 };
 
+const editTodo = async ({ id, todo }: { id: string; todo: BaseTodo }) => await http.patch(`todo/${id}`, todo);
 export const useEditTodo = (successAction = () => {}) => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -81,6 +54,7 @@ export const useEditTodo = (successAction = () => {}) => {
   });
 };
 
+const deleteTodo = async (id: string) => await http.delete(`todo/${id}`);
 export const useDeleteTodo = (successAction = () => {}) => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
@@ -97,6 +71,8 @@ export const useDeleteTodo = (successAction = () => {}) => {
   });
 };
 
+const changeTodoState = async ({ type, id, val }: { type: TodoState; id: string; val: boolean }) =>
+  await http.patch(`todo/${type}/${id}`, { val });
 export const useChangeTodoState = (successAction = () => {}) => {
   const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);

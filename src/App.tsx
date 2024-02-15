@@ -4,47 +4,44 @@ import { useRecoilValue } from "recoil";
 
 import { userAtom } from "@atoms/userAtom";
 
-import {
-  AddTodoPage,
-  AlarmPage,
-  CommonPage,
-  UserCategoryPage,
-  EditTodoPage,
-  LoginPage,
-  TodoListPage,
-  UserPage,
-  UserMapPage,
-  UserChartPage,
-} from "@pages";
+import AddTodoPage from "./add";
+import TodoListPage from "./list";
+import UserCategoryPage from "./category";
+import EditTodoPage from "./edit";
+import AlarmPage from "./alarm";
+import UserPage from "./user";
+import UserChartPage from "./chart";
+import UserMapPage from "./map";
+import LoginPage from "./login";
+import Navigation from "./common/nav";
+
+import { Alert, Overlay } from "@components";
+import { Loading } from "./common/state";
 
 function App() {
   const { is_logged_in } = useRecoilValue(userAtom);
-
   return (
     <Routes>
-      <Route element={<CommonPage />}>
-        {is_logged_in && (
-          <>
-            <Route index element={<TodoListPage />}></Route>
-            <Route path="/" element={<TodoListPage />}></Route>
-            <Route path="/add" element={<AddTodoPage />}></Route>
-            <Route path="/edit/:date/:id" element={<EditTodoPage />}></Route>
-            <Route path="/alarm" element={<AlarmPage />}></Route>
-            <Route path="/mypage" element={<UserPage></UserPage>} />
-            <Route path="/mypage/chart" element={<UserChartPage></UserChartPage>} />
-            <Route path="/mypage/category" element={<UserCategoryPage></UserCategoryPage>} />
-            <Route path="/mypage/map" element={<UserMapPage></UserMapPage>} />
-            <Route path="*" element={<Navigate replace to="/" />} />
-          </>
-        )}
+      {is_logged_in && (
+        <>
+          <Route index path="/" element={<TodoListPage />} />
+          <Route path="/add" element={<AddTodoPage />} />
+          <Route path="/edit/:date/:id" element={<EditTodoPage />}></Route>
+          <Route path="/alarm" element={<AlarmPage />} />
+          <Route path="/mypage" element={<UserPage />} />
+          <Route path="/mypage/chart" element={<UserChartPage />} />
+          <Route path="/mypage/category" element={<UserCategoryPage />} />
+          <Route path="/mypage/map" element={<UserMapPage />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
+        </>
+      )}
 
-        {!is_logged_in && (
-          <>
-            <Route path="/login" element={<LoginPage></LoginPage>}></Route>
-            <Route path="*" element={<Navigate replace to="/login" />} />
-          </>
-        )}
-      </Route>
+      {!is_logged_in && (
+        <>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="*" element={<Navigate replace to="/login" />} />
+        </>
+      )}
     </Routes>
   );
 }

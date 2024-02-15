@@ -13,6 +13,7 @@ export const http = axios.create({
     "Content-Type": "application/json",
   },
   timeout: 3000,
+  maxRedirects: 5,
 });
 
 interface Props {
@@ -30,7 +31,7 @@ const HttpProvider = ({ children }: Props) => {
     navigate("/");
   });
 
-  const reqIntercepter = http.interceptors.request.use((config) => {
+  const reqInterceptor = http.interceptors.request.use((config) => {
     if (userInfo.access_token) {
       config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
     }
@@ -58,10 +59,10 @@ const HttpProvider = ({ children }: Props) => {
 
   useEffect(() => {
     return () => {
-      http.interceptors.request.eject(reqIntercepter);
+      http.interceptors.request.eject(reqInterceptor);
       http.interceptors.response.eject(resInterceptor);
     };
-  }, [reqIntercepter, resInterceptor]);
+  }, [reqInterceptor, resInterceptor]);
 
   return children;
 };
