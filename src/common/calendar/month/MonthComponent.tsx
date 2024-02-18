@@ -52,7 +52,7 @@ const STATE_VARIANTS = {
   },
   current: {
     color: palette.white,
-    backgorundColor: palette.yellow,
+    backgroundColor: palette.yellow,
   },
 };
 

@@ -44,12 +44,12 @@ export const makeDateType = (value: number[], view: number[]) => {
   return "basic";
 };
 
-export const makeMonthState = (date: number[], selected: number[]) => {
+export const makeMonthState = (date: number[], view: number[]) => {
   const today = new Date();
   const todayArray = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
 
-  if (_isEqualDate(selected, date)) return "selected";
-  if (_isEqualDate(todayArray, date)) return "current";
+  if (_isEqualDate(date, view)) return "selected";
+  if (_isEqualDate(date, todayArray)) return "current";
   return "non_selected";
 };
 

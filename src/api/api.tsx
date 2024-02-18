@@ -23,18 +23,18 @@ interface Props {
 const HttpProvider = ({ children }: Props) => {
   const navigate = useNavigate();
 
-  const userInfo = useRecoilValue(userAtom);
+  const user = window.localStorage.getItem("user");
 
-  const resetUser = useResetRecoilState(userAtom);
   const { mutate } = useRefresh(() => {
-    resetUser();
     navigate("/");
   });
 
   const reqInterceptor = http.interceptors.request.use((config) => {
-    if (userInfo.access_token) {
-      config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
-    }
+    if (!user) return config;
+
+    const userInfo = JSON.parse(user);
+    config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
+
     return config;
   });
 
@@ -47,7 +47,8 @@ const HttpProvider = ({ children }: Props) => {
     },
     (err: AxiosError) => {
       if (err.response?.status === 401) {
-        resetUser();
+        localStorage.removeItem("user");
+        // resetUser();
         navigate("/");
       }
 

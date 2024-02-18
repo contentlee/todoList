@@ -1,4 +1,4 @@
-import { Map } from "@components";
+import { Map } from "@/map";
 
 interface Props {
   lat: number;

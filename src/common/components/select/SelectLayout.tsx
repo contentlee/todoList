@@ -9,12 +9,14 @@ const SelectLayout = ({ children }: Props) => {
   return (
     <div
       css={{
+        position: "relative",
         display: "flex",
         alignItems: "center",
         width: "100%",
         maxWidth: "350px",
         height: "40px",
-        padding: "0 16px",
+        padding: "0",
+        paddingLeft: "16px",
         gap: "16px",
         boxSizing: "border-box",
         border: "1px solid",

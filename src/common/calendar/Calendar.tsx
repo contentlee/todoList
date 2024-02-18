@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { useResetRecoilState } from "recoil";
-
-import { modalAtom } from "@atoms/modalAtom";
+import { createPortal } from "react-dom";
 
 import DateCalendar from "./date";
 import MonthCalendar from "./month";
+import { CalendarLayout } from "./layout";
 
 interface Props {
   selected: number[];
   selectDate: (date: number[]) => void;
+  toggleOpened: () => void;
 }
 
-const Calendar = ({ selected, selectDate }: Props) => {
-  // modal 리셋
-  const resetModal = useResetRecoilState(modalAtom);
-
+const Calendar = ({ selected, selectDate, toggleOpened }: Props) => {
   // calendar 타입 : 일 선택, 월 선택
   const [calendarType, setCalendarType] = useState<"date" | "month">("date");
   // 선택된 연도, 달
@@ -22,7 +19,6 @@ const Calendar = ({ selected, selectDate }: Props) => {
 
   const changeDate = (date: number[]) => {
     selectDate(date);
-    resetModal();
   };
 
   const changeMonth = (value: number[]) => {
@@ -33,16 +29,22 @@ const Calendar = ({ selected, selectDate }: Props) => {
     setCalendarType(type);
   };
 
-  return calendarType === "date" ? (
-    <DateCalendar
-      view={view}
-      selected={selected}
-      changeMonth={changeMonth}
-      changeType={changeType}
-      changeDate={changeDate}
-    />
-  ) : (
-    <MonthCalendar view={view} selected={selected} changeMonth={changeMonth} changeType={changeType} />
+  return createPortal(
+    <CalendarLayout toggleOpened={toggleOpened}>
+      {calendarType === "date" ? (
+        <DateCalendar
+          view={view}
+          selected={selected}
+          changeDate={changeDate}
+          changeMonth={changeMonth}
+          changeType={changeType}
+        />
+      ) : (
+        <MonthCalendar view={view} selected={selected} changeMonth={changeMonth} changeType={changeType} />
+      )}
+    </CalendarLayout>,
+    document.body,
+    "calendar"
   );
 };
 

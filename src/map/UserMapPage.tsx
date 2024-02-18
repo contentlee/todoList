@@ -15,9 +15,9 @@ const UserMapPage = () => {
   const { data, refetch } = useGetPlaces();
 
   const [places, setPlaces] = useState<ResPlace[]>([]);
-  const [selected, setSelected] = useState<Place | undefined>();
+  const [selected, setSelected] = useState<ResPlace | undefined>();
 
-  const selectPlace = (place?: Place) => {
+  const selectPlace = (place?: ResPlace) => {
     setSelected(place);
   };
 

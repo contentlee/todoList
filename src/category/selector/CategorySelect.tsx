@@ -31,7 +31,7 @@ const CategorySelect = ({ value }: Props) => {
 
   useEffect(() => {
     if (value) setCategory(value);
-    if (data) setOptions(data.category.map((v) => v.name));
+    if (data) setOptions(data.category?.map((v) => v.name));
   }, [data]);
 
   return <Select type="add" label="분류" value={category} options={options} handleAddOption={handleAddOption}></Select>;

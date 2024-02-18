@@ -3,13 +3,13 @@ import { useResetRecoilState } from "recoil";
 
 import { modalAtom } from "@atoms/modalAtom";
 
-import { Place } from "@utils/types/place";
+import { ResPlace } from "@utils/types/place";
 
 import { Button } from "@components";
 
 interface Props {
-  selected?: Place;
-  setSelectPlace: (place: Place) => void;
+  selected?: ResPlace;
+  setSelectPlace: (place?: ResPlace) => void;
 }
 const SetMapButton = ({ selected, setSelectPlace }: Props) => {
   const resetModal = useResetRecoilState(modalAtom);

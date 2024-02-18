@@ -1,10 +1,8 @@
-import { FormEvent } from "react";
+import { FormEvent, ReactNode } from "react";
 import { useRecoilState } from "recoil";
 
 import { useRegisterPlace } from "@api/place";
 import { alertAtom } from "@atoms/alertAtom";
-
-import { Place } from "../type";
 
 import { palette } from "@utils/palette";
 
@@ -13,11 +11,12 @@ import MapNameInput from "./MapNameInput";
 import MapSelect from "./MapSelect";
 import MapFormTitle from "./MapFormTitle";
 import { RegisterButton, ResetButton } from "./button";
+import { ResPlace } from "@utils/types/place";
 
 interface Props {
   refetch: () => void;
-  selectPlace: (place?: Place) => void;
-  children: React.ReactNode;
+  selectPlace: (place?: ResPlace) => void;
+  children: ReactNode;
 }
 
 const MapForm = ({ refetch, selectPlace, children }: Props) => {

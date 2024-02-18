@@ -3,8 +3,7 @@ import { useState } from "react";
 import { makeDate } from "@utils/datepiacker";
 
 import { Calendar } from ".";
-import { DatePickerInput } from "./input";
-import { DatePickerLayout } from "./layout";
+import { FormDateInput } from "./input";
 
 interface Props {
   date?: number[];
@@ -12,25 +11,24 @@ interface Props {
 
 const TODAY = makeDate(new Date());
 
-const DatePicker = ({ date = TODAY }: Props) => {
-  const [isOpened, setOpened] = useState(false);
+const FormDate = ({ date = TODAY }: Props) => {
+  const [isOpened, setOpened] = useState<boolean>(false);
+  const toggleOpened = () => {
+    setOpened(!isOpened);
+  };
 
   const [selected, setSelected] = useState(date);
   const selectDate = (date: number[]) => {
     setSelected(date);
-    setOpened((b) => !b);
-  };
-
-  const toggleOpened = () => {
-    setOpened((b) => !b);
+    setOpened(!isOpened);
   };
 
   return (
-    <DatePickerLayout>
-      <DatePickerInput date={selected} size="small" toggleOpened={toggleOpened} />
+    <div>
+      <FormDateInput selected={selected} toggleOpened={toggleOpened} />
       {isOpened && <Calendar selected={selected} selectDate={selectDate} toggleOpened={toggleOpened} />}
-    </DatePickerLayout>
+    </div>
   );
 };
 
-export default DatePicker;
+export default FormDate;

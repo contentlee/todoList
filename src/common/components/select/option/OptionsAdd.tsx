@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
-import OptionsAddForm from "./add/OptionsAddForm";
-import OptionsAddItem from "./add/OptionsAddItem";
+import OptionsAddForm from "./add";
+import OptionsAddItem from "./OptionsAddItem";
 
 interface Props {
   isOpenedAdd: boolean;
@@ -28,7 +28,7 @@ const OptionsAdd = ({ isOpenedAdd, createOption, toggleAddOptionsOpened }: Props
     setValue(value);
   };
 
-  if (isOpenedAdd) return <OptionsAddItem toggleAddOptionsOpened={toggleAddOptionsOpened} />;
+  if (!isOpenedAdd) return <OptionsAddItem toggleAddOptionsOpened={toggleAddOptionsOpened} />;
 
   return (
     <OptionsAddForm>

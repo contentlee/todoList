@@ -1,8 +1,5 @@
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-
-import { userAtom } from "@atoms/userAtom";
 
 import AddTodoPage from "./add";
 import TodoListPage from "./list";
@@ -13,18 +10,14 @@ import UserPage from "./user";
 import UserChartPage from "./chart";
 import UserMapPage from "./map";
 import LoginPage from "./login";
-import Navigation from "./common/nav";
-
-import { Alert, Overlay } from "@components";
-import { Loading } from "./common/state";
 
 function App() {
-  const { is_logged_in } = useRecoilValue(userAtom);
+  const user = localStorage.getItem("user");
   return (
     <Routes>
-      {is_logged_in && (
+      {user && (
         <>
-          <Route index path="/" element={<TodoListPage />} />
+          <Route path="/" element={<TodoListPage />} />
           <Route path="/add" element={<AddTodoPage />} />
           <Route path="/edit/:date/:id" element={<EditTodoPage />}></Route>
           <Route path="/alarm" element={<AlarmPage />} />
@@ -36,7 +29,7 @@ function App() {
         </>
       )}
 
-      {!is_logged_in && (
+      {!user && (
         <>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="*" element={<Navigate replace to="/login" />} />

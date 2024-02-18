@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, MouseEvent } from "react";
 import { setArrayToText } from "@utils/datepiacker";
 import { palette } from "@utils/palette";
 
@@ -6,11 +6,17 @@ interface Props extends HTMLAttributes<HTMLInputElement> {
   children?: React.ReactNode;
   date?: number[];
   size: "small" | "regular" | "large";
+  toggleOpened: () => void;
 }
 
-const DateInputComponent = ({ date, children, size, ...props }: Props) => {
+const DatePickerInput = ({ date, children, size, toggleOpened, ...props }: Props) => {
+  const handleClickInput = (e: MouseEvent) => {
+    e.preventDefault();
+    toggleOpened();
+  };
   return (
     <input
+      onClick={handleClickInput}
       readOnly
       type="text"
       value={date ? setArrayToText(date) : ""}
@@ -52,4 +58,4 @@ const SIZE_VARIANTS = {
   },
 };
 
-export default DateInputComponent;
+export default DatePickerInput;

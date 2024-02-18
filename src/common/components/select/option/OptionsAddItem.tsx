@@ -1,5 +1,5 @@
 import AddIcon from "@assets/add_icon.svg";
-import Icon from "../../../Icon";
+import Icon from "../../Icon";
 import { MouseEvent } from "react";
 
 interface Props {

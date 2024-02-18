@@ -4,20 +4,20 @@ import { useGetPlaces } from "@api/place";
 
 import MapForm from "./form";
 import MapBody from "./body";
-import { Place } from "@utils/types/place";
+import { Place, ResPlace } from "@utils/types/place";
 
 interface Props {
   id: string;
-  place?: Place;
-  setSelectPlace: (place: Place) => void;
+  place?: ResPlace;
+  setSelectPlace: (place?: ResPlace) => void;
 }
 
-const MapModal = ({ id, place, setSelectPlace }: Props) => {
+const MapModal = ({ place, setSelectPlace }: Props) => {
   const { data, refetch } = useGetPlaces();
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [selected, setSelected] = useState<Place | undefined>();
+  const [places, setPlaces] = useState<ResPlace[]>([]);
+  const [selected, setSelected] = useState<ResPlace | undefined>();
 
-  const selectPlace = (place?: Place) => {
+  const selectPlace = (place?: ResPlace) => {
     setSelected(place);
   };
 

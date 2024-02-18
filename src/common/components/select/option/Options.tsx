@@ -18,6 +18,7 @@ const Options = ({ children }: Props) => {
         display: "flex",
         width: "100%",
         height: "100%",
+        paddingRight: "16px",
         cursor: "pointer",
         gap: "20px",
 

@@ -1,9 +1,9 @@
 import { Select } from "@components";
-import { Place } from "@utils/types/place";
+import { ResPlace } from "@utils/types/place";
 
 interface Props {
-  places: Place[];
-  selectPlace: (place: Place) => void;
+  places: ResPlace[];
+  selectPlace: (place: ResPlace) => void;
 }
 const MapSelect = ({ places, selectPlace }: Props) => {
   const handleClickOption = (name: string) => {

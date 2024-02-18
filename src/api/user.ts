@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery } from "react-query";
 import { useRecoilState, useResetRecoilState } from "recoil";
 
@@ -12,11 +12,12 @@ import { ChartResponse, TokenResponse } from "@utils/types/user";
 const login = async (credential: string): Promise<TokenResponse> => await http.post("login/", { credential });
 export const useLogin = (successAction = () => {}) => {
   const [_, setAlert] = useRecoilState(alertAtom);
-  const [__, setUser] = useRecoilState(userAtom);
 
   return useMutation(login, {
     onSuccess: ({ access_token, email, name }) => {
-      setUser({ access_token, is_logged_in: true, email, name });
+      const user = { access_token, name, email };
+      localStorage.setItem("user", JSON.stringify(user));
+
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.login.success });
       successAction();
     },
@@ -31,14 +32,15 @@ export const useLogout = (successAction = () => {}) => {
   const navigate = useNavigate();
 
   const [_, setAlert] = useRecoilState(alertAtom);
-  const resetUser = useResetRecoilState(userAtom);
 
   return useMutation(logout, {
     onSuccess: () => {
-      resetUser();
-      navigate("/");
+      localStorage.removeItem("user");
+
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.logout.success });
       successAction();
+
+      navigate("/");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.logout.error });
@@ -47,15 +49,15 @@ export const useLogout = (successAction = () => {}) => {
 };
 
 const refresh = async (): Promise<TokenResponse> => await http.post("login/refresh/");
-export const useRefresh = (errorAction = () => {}) => {
-  const navigate = useNavigate();
+export const useRefresh = (successAction = () => {}, errorAction = () => {}) => {
   const [__, setUser] = useRecoilState(userAtom);
 
   return useMutation(refresh, {
     onSuccess: ({ access_token, email, name }) => {
       if (access_token) {
-        setUser({ access_token, is_logged_in: true, email, name });
-        navigate("/");
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify({ access_token, name, email }));
+        successAction();
       }
     },
     onError: () => {
@@ -70,13 +72,12 @@ export const useRemoveUser = () => {
   const navigate = useNavigate();
 
   const [_, setAlert] = useRecoilState(alertAtom);
-  const resetUser = useResetRecoilState(userAtom);
 
   return useMutation(removeUser, {
     onSuccess: () => {
-      resetUser();
-      navigate("/");
+      localStorage.removeItem("user");
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.remove.success });
+      navigate("/");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.remove.error });

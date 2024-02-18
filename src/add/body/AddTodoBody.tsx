@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 
 import { useCreateTodo } from "@api/todo";
 
-import { calendarAtomFamily } from "@atoms/calendarAtom";
 import { placeAtomFamily } from "@atoms/mapAtom";
 import { alertAtom } from "@atoms/alertAtom";
 
@@ -47,12 +46,12 @@ const AddTodoBody = () => {
     <Form onSubmit={handleSubmit}>
       <Form.Title />
       <Form.Date />
-      <Form.Map />
+      {/* <Form.Map />
       <Form.Category />
       <Form.ButtonLayout>
         <Form.Reset />
         <Form.Submit />
-      </Form.ButtonLayout>
+      </Form.ButtonLayout> */}
     </Form>
   );
 };

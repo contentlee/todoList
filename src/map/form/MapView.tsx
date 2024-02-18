@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Map } from "@components";
 
-import { Place, Position } from "@utils/types/place";
+import { Position, ResPlace } from "@utils/types/place";
+import { Map } from "..";
 
 interface Props {
-  places: Place[];
-  selected?: Place;
-  selectPlace: (place: Place) => void;
+  places: ResPlace[];
+  selected?: ResPlace;
+  selectPlace: (place?: ResPlace) => void;
 }
 
 const MapView = ({ places, selected, selectPlace }: Props) => {

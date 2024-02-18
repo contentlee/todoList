@@ -1,9 +1,8 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent } from "react";
 
 import { calculateMonth, changeArrayToText, makeDateState, makeDateType, makeDates } from "../helpers/calendar";
 import { DAY_OF_WEEK } from "../helpers/constant";
 
-import { CalendarLayout } from "../layout";
 import CalendarHead from "../head";
 import CalendarBody from "../body";
 
@@ -19,7 +18,7 @@ interface Props {
 }
 
 const DateCalendar = ({ view, selected, changeDate, changeMonth, changeType }: Props) => {
-  const [dates, setDates] = useState<number[][]>();
+  const dates = makeDates(view);
 
   const handleClickPrev = (e: MouseEvent) => {
     e.preventDefault();
@@ -38,12 +37,8 @@ const DateCalendar = ({ view, selected, changeDate, changeMonth, changeType }: P
     changeType("month");
   };
 
-  useEffect(() => {
-    setDates(makeDates(view));
-  }, [view]);
-
   return (
-    <CalendarLayout>
+    <>
       <CalendarHead>
         <CalendarHead.Arrow type="prev" handleClickArrow={handleClickPrev} />
         <CalendarHead.Title onClick={handleClickTitle}>{changeArrayToText([view[0], view[1]])}</CalendarHead.Title>
@@ -67,7 +62,7 @@ const DateCalendar = ({ view, selected, changeDate, changeMonth, changeType }: P
           );
         })}
       </CalendarBody>
-    </CalendarLayout>
+    </>
   );
 };
 

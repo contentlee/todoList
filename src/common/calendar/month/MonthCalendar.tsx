@@ -1,8 +1,7 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 
 import { calculateMonth, makeMonthState } from "../helpers/calendar";
 
-import { CalendarLayout } from "../layout";
 import CalendarHead from "../head";
 import CalendarBody from "../body";
 import MonthComponent from "./MonthComponent";
@@ -36,7 +35,7 @@ const MonthCalendar = ({ view, selected, changeMonth, changeType }: Props) => {
   };
 
   return (
-    <CalendarLayout>
+    <>
       <CalendarHead>
         <CalendarHead.Arrow type="prev" handleClickArrow={handleClickPrev} />
         <CalendarHead.Title>{view[0]}</CalendarHead.Title>
@@ -49,13 +48,13 @@ const MonthCalendar = ({ view, selected, changeMonth, changeType }: Props) => {
             <MonthComponent
               key={i}
               value={[view[0], m]}
-              state={makeMonthState([view[0], m], selected || [])}
+              state={makeMonthState([view[0], m], view)}
               selectMonth={selectMonth}
             />
           );
         })}
       </CalendarBody>
-    </CalendarLayout>
+    </>
   );
 };
 

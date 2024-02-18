@@ -1,14 +1,32 @@
+import { ReactNode, useEffect, useRef } from "react";
+
 import { palette } from "@utils/palette";
-import { ReactNode } from "react";
 
 interface Props {
   isOpened: boolean;
   children: ReactNode;
+  resetOptionsOpened: () => void;
 }
-const OptionsList = ({ isOpened, children }: Props) => {
-  if (!isOpened) return <></>;
+
+const OptionsList = ({ isOpened, children, resetOptionsOpened }: Props) => {
+  const optionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent) => {
+      if (isOpened && !optionsRef.current?.contains(e.target as Node)) {
+        resetOptionsOpened();
+      }
+    };
+    document.addEventListener("mousedown", clickOutside);
+
+    return () => {
+      removeEventListener("mousedown", clickOutside);
+    };
+  }, [isOpened]);
+
   return (
     <div
+      ref={optionsRef}
       css={{
         zIndex: "100",
         position: "absolute",

@@ -1,5 +1,5 @@
 import Calendar from "./Calendar";
 import DatePicker from "./DatePicker";
-import InputDate from "./InputDate";
+import FormDate from "./FormDate";
 
-export { Calendar, DatePicker, InputDate };
+export { Calendar, DatePicker, FormDate };

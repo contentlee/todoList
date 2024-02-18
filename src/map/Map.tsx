@@ -1,12 +1,12 @@
+import { Loading } from "@/common/state";
 import { LoadScriptNext, GoogleMap, MarkerF } from "@react-google-maps/api";
 
-import { Loading } from "../state";
-import { Place, Position } from "@utils/types/place";
+import { Position, ResPlace } from "@utils/types/place";
 
 interface Props {
   center: Position;
   selected?: Position;
-  places?: Place[];
+  places?: ResPlace[];
   handleClickPosition?: (e: google.maps.MapMouseEvent) => void;
   handleClickMarker?: (e: google.maps.MapMouseEvent) => void;
 }
