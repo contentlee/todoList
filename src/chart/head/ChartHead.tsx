@@ -1,26 +1,14 @@
-import { ReactNode } from "react";
 import ChartTitle from "./ChartTitle";
 import BackButton from "./BackButton";
+import ChartHeadLayout from "./ChartHeadLayout";
 
-interface Props {
-  children: ReactNode;
-}
-
-const ChartHead = ({ children }: Props) => {
+const ChartHead = () => {
   return (
-    <div
-      css={{
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
-      }}
-    >
-      {children}
-    </div>
+    <ChartHeadLayout>
+      <ChartTitle />
+      <BackButton />
+    </ChartHeadLayout>
   );
 };
-
-ChartHead.Title = ChartTitle;
-ChartHead.Back = BackButton;
 
 export default ChartHead;

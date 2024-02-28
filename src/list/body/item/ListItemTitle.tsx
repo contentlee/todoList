@@ -1,21 +1,15 @@
 import { HTMLAttributes, MouseEvent } from "react";
-import { useRecoilState } from "recoil";
-
-import { modalAtom } from "@atoms/modalAtom";
-import { selectedTodoAtom } from "@atoms/todoAtom";
 
 import { ResTodo } from "@utils/types/todo";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   item: ResTodo;
+  selectTodo: (todo: ResTodo) => void;
 }
-const ListItemTitle = ({ item }: Props) => {
-  const [_, setTodo] = useRecoilState(selectedTodoAtom);
-  const [__, setModal] = useRecoilState(modalAtom);
+const ListItemTitle = ({ item, selectTodo }: Props) => {
   const handleClickTitle = (e: MouseEvent) => {
     e.preventDefault();
-    setTodo(item);
-    setModal({ isOpened: true, type: "card" });
+    selectTodo(item);
   };
   return (
     <div

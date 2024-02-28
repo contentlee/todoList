@@ -1,31 +1,28 @@
-import { ReactNode } from "react";
+import { useEffect, useState } from "react";
 
-import CategoryRegister from "../register";
-import CategoryList from "../list";
+import { useGetCategories } from "@api/category";
 
-interface Props {
-  children: ReactNode;
-}
+import { Category } from "@utils/types/category";
 
-const CategoryBody = ({ children }: Props) => {
+import CategoryBodyLayout from "./layout";
+import CategoryRegister from "./register";
+import CategoryList from "./list";
+
+const CategoryBody = () => {
+  const { data } = useGetCategories();
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    if (data) setCategories(data.category);
+  }, [data]);
+
   return (
-    <div
-      css={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        minWidth: "100%",
-        overflow: "auto",
-        boxSizing: "border-box",
-      }}
-    >
-      {children}
-    </div>
+    <CategoryBodyLayout>
+      <CategoryRegister categories={categories} />
+      <CategoryList categories={categories} />
+    </CategoryBodyLayout>
   );
 };
-
-CategoryBody.Register = CategoryRegister;
-CategoryBody.List = CategoryList;
 
 export default CategoryBody;

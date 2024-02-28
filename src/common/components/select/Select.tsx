@@ -1,8 +1,9 @@
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import SelectLabel from "./SelectLabel";
 import SelectLayout from "./SelectLayout";
 import SelectInput from "./SelectInput";
 import Options from "./option";
+import Modal from "../Modal";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   type?: "basic" | "add";
@@ -18,7 +19,7 @@ const Select = ({
   type = "basic",
   label,
   value = "",
-  options = [],
+  options,
   handleClickOption,
   handleAddOption = () => {},
   children,
@@ -26,7 +27,6 @@ const Select = ({
 }: Props) => {
   const [isOpened, setOpened] = useState(false);
   const [curValue, setCurValue] = useState(value);
-
   const [list, setList] = useState<string[]>(options);
   const [isOpenedAdd, setOpenedAdd] = useState(false);
 
@@ -55,6 +55,9 @@ const Select = ({
     if (handleClickOption) handleClickOption(option);
   };
 
+  useEffect(() => {
+    setList(options);
+  }, [options]);
   return (
     <SelectLayout>
       <SelectInput value={curValue} {...props} />
@@ -62,18 +65,16 @@ const Select = ({
 
       <Options>
         <Options.Value value={curValue} toggleOptionsOpened={toggleOptionsOpened} />
-        {isOpened && (
-          <Options.List isOpened={isOpened} resetOptionsOpened={resetOptionsOpened}>
-            {list.map((option) => {
-              return <Options.Item key={option} value={option} selectOption={selectOption} />;
-            })}
-            <Options.Add
-              isOpenedAdd={isOpenedAdd}
-              createOption={createOption}
-              toggleAddOptionsOpened={toggleAddOptionsOpened}
-            />
-          </Options.List>
-        )}
+        <Options.List isOpened={isOpened} closeModal={resetOptionsOpened}>
+          {list?.map((option) => {
+            return <Options.Item key={option} value={option} selectOption={selectOption} />;
+          })}
+          <Options.Add
+            isOpenedAdd={isOpenedAdd}
+            createOption={createOption}
+            toggleAddOptionsOpened={toggleAddOptionsOpened}
+          />
+        </Options.List>
       </Options>
     </SelectLayout>
   );

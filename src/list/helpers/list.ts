@@ -16,3 +16,13 @@ export const mkListByType = (todos: ResTodo[] = [], type = "todo") => {
     return todos.filter(({ is_held }) => is_held);
   } else return [];
 };
+
+export const setArrayToPath = ([y, m, d]: number[]) => {
+  const month = m < 10 ? `0${m}` : m;
+  const date = d < 10 ? `0${d}` : d;
+  return `${y}${month}${date} `;
+};
+
+export const setDateStringToPath = (date: string) => {
+  return date.split("T")[0].split("-").join("");
+};

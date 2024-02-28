@@ -3,8 +3,7 @@ import { MouseEvent } from "react";
 import { calculateMonth, changeArrayToText, makeDateState, makeDateType, makeDates } from "../helpers/calendar";
 import { DAY_OF_WEEK } from "../helpers/constant";
 
-import CalendarHead from "../head";
-import CalendarBody from "../body";
+import { CalendarHead, CalendarBody, CalendarLayout } from "../common";
 
 import DayComponent from "./DayComponent";
 import DateComponent from "./DateComponent";
@@ -38,7 +37,7 @@ const DateCalendar = ({ view, selected, changeDate, changeMonth, changeType }: P
   };
 
   return (
-    <>
+    <CalendarLayout>
       <CalendarHead>
         <CalendarHead.Arrow type="prev" handleClickArrow={handleClickPrev} />
         <CalendarHead.Title onClick={handleClickTitle}>{changeArrayToText([view[0], view[1]])}</CalendarHead.Title>
@@ -62,7 +61,7 @@ const DateCalendar = ({ view, selected, changeDate, changeMonth, changeType }: P
           );
         })}
       </CalendarBody>
-    </>
+    </CalendarLayout>
   );
 };
 

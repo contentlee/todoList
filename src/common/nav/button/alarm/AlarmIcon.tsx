@@ -10,7 +10,7 @@ interface Props {
 const AlarmIcon = ({ changePath }: Props) => {
   const handleClickIcon = (e: MouseEvent) => {
     e.preventDefault();
-    changePath("add");
+    changePath("alarm");
   };
   return (
     <Icon src={AlramIcon} size="medium" alt="alarm" onClick={handleClickIcon} css={{ position: "relative" }}></Icon>

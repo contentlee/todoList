@@ -3,6 +3,5 @@ export interface Category {
   name: string;
 }
 export interface Categories {
-  email: string;
   category: Category[];
 }

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { useEditTodo, useGetTodo } from "@api/todo";
 
-import { placeAtomFamily } from "@atoms/mapAtom";
 import { alertAtom } from "@atoms/alertAtom";
 
 import { compareObjects } from "@utils/comparison";
@@ -31,24 +30,21 @@ const EditTodoBody = () => {
     const target = (idx: number) => e.currentTarget[idx] as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
     if (!target(0).value) return setAlert({ isOpened: true, type: "warning", children: "제목이 입력되지 않았습니다." });
 
-    const { name, lat, lng } = useRecoilValue(placeAtomFamily("form"));
-
     const obj1 = {
       date: target(1).value,
       title: target(0).value,
       content: target(4).value,
       place: {
         marker: "A",
-        name,
-        lat,
-        lng,
+        name: target(4).value,
+        lat: Number(target(4).value),
+        lng: Number(target(4).value),
       },
       category: target(3).value,
     };
-    const obj2 = todo!;
-    obj2["date"] = setDateToText(obj2["date"]);
+    todo!["date"] = setDateToText(todo!["date"]);
 
-    const [_, req] = compareObjects(obj1, obj2);
+    const [_, req] = compareObjects(obj1, todo);
 
     if (Object.keys(req).length !== 0) {
       mutate({ id: id!, todo: req });
@@ -59,13 +55,14 @@ const EditTodoBody = () => {
 
   useEffect(() => {
     if (data) setTodo(data);
+    else navigate("/");
   }, []);
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Title title={todo?.title} />
-      <Form.Date value={todo?.date} />
-      <Form.Map value={todo?.place} />
+      <Form.Date value={undefined} />
+      <Form.Map value={undefined} />
       <Form.Category value={todo?.category} />
       <Form.ButtonLayout>
         <Form.Reset />

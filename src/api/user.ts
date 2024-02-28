@@ -1,11 +1,10 @@
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { useMutation, useQuery } from "react-query";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { http } from "./api";
 
 import { alertAtom } from "@atoms/alertAtom";
-import { userAtom } from "@atoms/userAtom";
 import { ALERT_MSG } from "@utils/constant";
 import { ChartResponse, TokenResponse } from "@utils/types/user";
 
@@ -14,9 +13,8 @@ export const useLogin = (successAction = () => {}) => {
   const [_, setAlert] = useRecoilState(alertAtom);
 
   return useMutation(login, {
-    onSuccess: ({ access_token, email, name }) => {
-      const user = { access_token, name, email };
-      localStorage.setItem("user", JSON.stringify(user));
+    onSuccess: ({ access_token }) => {
+      localStorage.setItem("access_token", JSON.stringify(access_token));
 
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.login.success });
       successAction();
@@ -35,7 +33,7 @@ export const useLogout = (successAction = () => {}) => {
 
   return useMutation(logout, {
     onSuccess: () => {
-      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
 
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.logout.success });
       successAction();
@@ -50,13 +48,11 @@ export const useLogout = (successAction = () => {}) => {
 
 const refresh = async (): Promise<TokenResponse> => await http.post("login/refresh/");
 export const useRefresh = (successAction = () => {}, errorAction = () => {}) => {
-  const [__, setUser] = useRecoilState(userAtom);
-
   return useMutation(refresh, {
-    onSuccess: ({ access_token, email, name }) => {
+    onSuccess: ({ access_token }) => {
       if (access_token) {
-        localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify({ access_token, name, email }));
+        localStorage.removeItem("access_token");
+        localStorage.setItem("access_token", JSON.stringify(access_token));
         successAction();
       }
     },
@@ -75,7 +71,7 @@ export const useRemoveUser = () => {
 
   return useMutation(removeUser, {
     onSuccess: () => {
-      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.remove.success });
       navigate("/");
     },

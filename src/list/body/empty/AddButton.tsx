@@ -12,7 +12,7 @@ const AddButton = ({ ...props }: Props) => {
 
   const handleClickAdd = (e: MouseEvent) => {
     e.preventDefault();
-    navigate("add");
+    navigate("/add");
   };
   return (
     <div

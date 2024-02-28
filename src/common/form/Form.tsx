@@ -1,13 +1,13 @@
 import { HTMLAttributes } from "react";
 import { useNavigate } from "react-router";
 
-import { CategorySelect } from "@/category";
 import { TextArea } from "@components";
 
-import InputTitle from "./InputTitle";
 import { ButtonLayout, ResetButton, SubmitButton } from "./button";
-import { FormDate } from "../calendar";
-import { InputMap } from "@/map";
+import InputTitle from "./InputTitle";
+import InputDate from "./InputDate";
+import SelectCategory from "./SelectCategory";
+import InputMap from "./InputMap";
 
 interface Props extends HTMLAttributes<HTMLFormElement> {
   children?: React.ReactNode;
@@ -38,9 +38,9 @@ const Form = ({ children, ...props }: Props) => {
 };
 
 Form.Title = InputTitle;
-Form.Date = FormDate;
+Form.Date = InputDate;
 Form.Map = InputMap;
-Form.Category = CategorySelect;
+Form.Category = SelectCategory;
 Form.TextArea = TextArea;
 Form.ButtonLayout = ButtonLayout;
 Form.Reset = ResetButton;

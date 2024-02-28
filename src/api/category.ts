@@ -19,13 +19,11 @@ export interface Request {
 }
 const registerCategory = async (category: Request) => await http.post("category/add", category);
 export const useRegisterCategory = () => {
-  const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
 
   return useMutation(registerCategory, {
     onSuccess: () => {
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.add.success });
-      client.invalidateQueries("category");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.add.error });
@@ -35,13 +33,11 @@ export const useRegisterCategory = () => {
 
 const deleteCategory = async (id: string) => await http.delete(`category/delete/${id}`);
 export const useDeleteCategory = () => {
-  const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
 
   return useMutation(deleteCategory, {
     onSuccess: () => {
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.remove.success });
-      client.invalidateQueries("category");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.remove.error });

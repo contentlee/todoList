@@ -20,13 +20,11 @@ interface Request {
 
 const registerPlace = async (place: Request) => await http.post("place/add", place);
 export const useRegisterPlace = () => {
-  const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
 
   return useMutation(registerPlace, {
     onSuccess: () => {
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.add.success });
-      client.invalidateQueries("category");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.add.error });
@@ -36,13 +34,11 @@ export const useRegisterPlace = () => {
 
 const deletePlace = async (id: string) => await http.delete(`place/delete/${id}`);
 export const useDeletePlace = () => {
-  const client = useQueryClient();
   const [_, setAlert] = useRecoilState(alertAtom);
 
   return useMutation(deletePlace, {
     onSuccess: () => {
       setAlert({ isOpened: true, type: "success", children: ALERT_MSG.remove.success });
-      client.invalidateQueries("category");
     },
     onError: () => {
       setAlert({ isOpened: true, type: "error", children: ALERT_MSG.remove.error });

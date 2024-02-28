@@ -1,3 +1,3 @@
-import AlarmItem from "./AlarmItem";
+import AlarmBody from "./AlarmBody";
 
-export default AlarmItem;
+export default AlarmBody;

@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
 
-import { PageLayout } from "@components";
-import AlarmItem from "./body";
 import AlarmHead from "./head";
+import AlarmBody from "./body";
 
-interface Item {
-  content: string;
-  date: string;
-}
+import { Alarm } from "./helpers/type";
+import { PageLayout } from "@components";
+
 const DEFAULT_LIST = [
   { content: "오늘의 할일을 무사히 끝내셨네요!", date: "2023-09-12" },
   { content: "오늘의 할일을 무사히 끝내셨네요!", date: "2023-09-12" },
 ];
 
 const AlarmPage = () => {
-  const [list, setList] = useState<Item[]>();
+  const [alarms, setAlarms] = useState<Alarm[]>([]);
 
   useEffect(() => {
-    setList(DEFAULT_LIST);
+    setAlarms(DEFAULT_LIST);
   }, []);
 
   return (
@@ -29,14 +27,7 @@ const AlarmPage = () => {
       }}
     >
       <AlarmHead />
-      {list?.map(({ content, date }) => {
-        return (
-          <AlarmItem>
-            <AlarmItem.Content>{content}</AlarmItem.Content>
-            <AlarmItem.Date date={date} />
-          </AlarmItem>
-        );
-      })}
+      <AlarmBody alarms={alarms} />
     </PageLayout>
   );
 };

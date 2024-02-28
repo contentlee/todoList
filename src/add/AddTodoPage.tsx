@@ -1,7 +1,6 @@
-import { PageLayout } from "@components";
-
 import AddTodoTitle from "./head";
 import AddTodoBody from "./body";
+import { PageLayout } from "@components";
 
 const AddTodoPage = () => {
   return (

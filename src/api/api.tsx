@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-
-import { userAtom } from "@atoms/userAtom";
 
 import { useRefresh } from "./user";
 
@@ -23,17 +20,16 @@ interface Props {
 const HttpProvider = ({ children }: Props) => {
   const navigate = useNavigate();
 
-  const user = window.localStorage.getItem("user");
+  const access_token = window.localStorage.getItem("access_token");
 
   const { mutate } = useRefresh(() => {
     navigate("/");
   });
 
   const reqInterceptor = http.interceptors.request.use((config) => {
-    if (!user) return config;
+    if (!access_token) return config;
 
-    const userInfo = JSON.parse(user);
-    config.headers["Authorization"] = `Bearer ${userInfo.access_token}`;
+    config.headers["Authorization"] = `Bearer ${JSON.parse(access_token)}`;
 
     return config;
   });
@@ -47,7 +43,7 @@ const HttpProvider = ({ children }: Props) => {
     },
     (err: AxiosError) => {
       if (err.response?.status === 401) {
-        localStorage.removeItem("user");
+        localStorage.removeItem("access_token");
         // resetUser();
         navigate("/");
       }

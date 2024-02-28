@@ -1,29 +1,16 @@
-import { ReactNode } from "react";
 import UserInfo from "./UserInfo";
 import UserSetting from "./UserSetting";
 import UserAccount from "./UserAccount";
+import UserBodyLayout from "./UserBodyLayout";
 
-interface Props {
-  children: ReactNode;
-}
-
-const UserBody = ({ children }: Props) => {
+const UserBody = () => {
   return (
-    <div
-      css={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: "16px",
-      }}
-    >
-      {children}
-    </div>
+    <UserBodyLayout>
+      <UserInfo />
+      <UserSetting />
+      <UserAccount />
+    </UserBodyLayout>
   );
 };
-
-UserBody.UserInfo = UserInfo;
-UserBody.UserSetting = UserSetting;
-UserBody.UserAccount = UserAccount;
 
 export default UserBody;

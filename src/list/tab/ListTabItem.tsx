@@ -1,24 +1,24 @@
-import { useRecoilState } from "recoil";
-
 import { palette } from "@utils/palette";
 import { CONSTANT_STR } from "@utils/constant";
-
-import { typeListAtom } from "@atoms/todoAtom";
+import { useEffect, useState } from "react";
 
 interface Props {
   type: "todo" | "complete" | "hold";
-  checked: boolean;
+  selectedType: "todo" | "complete" | "hold";
+  handleClickType: (type: Props["selectedType"]) => void;
 }
 
-const ListTabItem = ({ type, checked }: Props) => {
-  const [_, setTypeList] = useRecoilState(typeListAtom);
-
-  const handleChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+const ListTabItem = ({ type, selectedType, handleClickType }: Props) => {
+  const [checked, setChecked] = useState<boolean>(false);
+  const selectType = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const value = e.currentTarget.value as Props["type"];
-    setTypeList(value);
+    handleClickType(value);
   };
 
+  useEffect(() => {
+    setChecked(type === selectedType);
+  }, [selectedType]);
   return (
     <label
       htmlFor={type}
@@ -38,7 +38,7 @@ const ListTabItem = ({ type, checked }: Props) => {
         name="list_tab"
         value={type}
         checked={checked}
-        onChange={handleChangeChecked}
+        onChange={selectType}
         css={{ display: "none" }}
       />
     </label>

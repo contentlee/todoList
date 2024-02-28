@@ -1,25 +1,23 @@
-import { ReactNode } from "react";
 import LIstTabItem from "./ListTabItem";
+import ListTabLayout from "./ListTabLayout";
+
+import { TYPE_STR } from "../helpers/constant";
+
+import { TodoState } from "@utils/types/todo";
 
 interface Props {
-  children: ReactNode;
+  selectedType: TodoState;
+  handleClickType: (type: TodoState) => void;
 }
 
-const ListTab = ({ children }: Props) => {
+const ListTab = ({ selectedType, handleClickType }: Props) => {
   return (
-    <fieldset
-      css={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "4px",
-        margin: "4px",
-      }}
-    >
-      {children}
-    </fieldset>
+    <ListTabLayout>
+      {TYPE_STR.map((t) => {
+        return <LIstTabItem key={`${t}_key`} type={t} selectedType={selectedType} handleClickType={handleClickType} />;
+      })}
+    </ListTabLayout>
   );
 };
-
-ListTab.Item = LIstTabItem;
 
 export default ListTab;

@@ -1,44 +1,53 @@
-import { ReactNode } from "react";
+import { useEffect, useState } from "react";
 
-import ChartContentBar from "./ChartContentBar";
-import ChartContentText from "./ChartContentText";
+import { palette } from "@utils/palette";
+import { makeDate } from "@utils/datepiacker";
+import { ChartResponse } from "@utils/types/user";
 
-interface Props {
-  children: ReactNode;
-}
+import { useGetChartAll } from "@api/user";
 
-const ChartBody = ({ children }: Props) => {
+import ChartBodyLayout from "./layout";
+import BarChart from "./bar";
+import TextChart from "./text";
+import ErrorCard from "@/common/error";
+
+const ChartBody = () => {
+  const today = makeDate(new Date());
+
+  const [chart, setChart] = useState<ChartResponse>();
+
+  const { data, refetch } = useGetChartAll();
+
+  useEffect(() => {
+    if (data) setChart(data);
+  }, [data]);
+
+  if (!chart)
+    return (
+      <ChartBodyLayout>
+        <ErrorCard refetch={refetch} />
+      </ChartBodyLayout>
+    );
+
   return (
-    <div
-      css={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100%",
-        marginTop: "8px",
-        paddingBottom: "24px",
-        gap: "10px",
-        WebkitScrollSnapType: "y",
-      }}
-    >
+    <ChartBodyLayout>
+      <BarChart chart={chart} />
       <div
         css={{
           display: "flex",
           flexDirection: "column",
+          padding: "16px 0",
+          border: `1px solid ${palette.gray600}`,
           gap: "8px",
-          width: "100%",
-          margin: "8px 0",
-          overflow: "hidden",
+          boxSizing: "border-box",
         }}
       >
-        {children}
+        <TextChart title={`연간통계 (${today[0]}년)`} chart={chart.y} />
+        <TextChart title={`월간통계 (${today[1]}월)`} chart={chart.m} />
+        <TextChart title={`일간통계 (${today[2]}일)`} chart={chart.d} />
       </div>
-    </div>
+    </ChartBodyLayout>
   );
 };
-
-ChartBody.Bar = ChartContentBar;
-ChartBody.Text = ChartContentText;
 
 export default ChartBody;

@@ -9,7 +9,7 @@ interface Props {
 const UserButton = ({ changePath }: Props) => {
   const handleClickIcon = (e: MouseEvent) => {
     e.preventDefault();
-    changePath("add");
+    changePath("mypage");
   };
   return <Icon src={ProfileIcon} size="medium" alt="mypage" onClick={handleClickIcon}></Icon>;
 };

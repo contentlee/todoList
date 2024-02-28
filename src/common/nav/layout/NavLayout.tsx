@@ -12,6 +12,7 @@ const NavLayout = ({ children }: Props) => {
         zIndex: "100",
         position: "fixed",
         bottom: 0,
+        left: 0,
         display: "flex",
         justifyContent: "center",
         width: "100%",

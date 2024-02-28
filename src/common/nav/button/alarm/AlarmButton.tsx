@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import AlarmIcon from "./AlarmIcon";
 import AlarmFlag from "./AlarmFlag";
 

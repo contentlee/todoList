@@ -73,3 +73,7 @@ select {
   -webkit-appearance: none;
   appearance: none;
 }
+
+fieldset {
+  border: none;
+}

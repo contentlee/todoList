@@ -2,13 +2,12 @@ import { MouseEvent } from "react";
 
 import { calculateMonth, makeMonthState } from "../helpers/calendar";
 
-import CalendarHead from "../head";
-import CalendarBody from "../body";
+import { CalendarHead, CalendarBody, CalendarLayout } from "../common";
+
 import MonthComponent from "./MonthComponent";
 
 interface Props {
   view: number[];
-  selected: number[];
   changeMonth: (v: number[]) => void;
   changeType: (t: "date" | "month") => void;
 }
@@ -16,7 +15,7 @@ interface Props {
 // Default Value
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => i + 1);
 
-const MonthCalendar = ({ view, selected, changeMonth, changeType }: Props) => {
+const MonthCalendar = ({ view, changeMonth, changeType }: Props) => {
   const handleClickPrev = (e: MouseEvent) => {
     e.preventDefault();
     const value = calculateMonth(view, -12);
@@ -35,7 +34,7 @@ const MonthCalendar = ({ view, selected, changeMonth, changeType }: Props) => {
   };
 
   return (
-    <>
+    <CalendarLayout>
       <CalendarHead>
         <CalendarHead.Arrow type="prev" handleClickArrow={handleClickPrev} />
         <CalendarHead.Title>{view[0]}</CalendarHead.Title>
@@ -54,7 +53,7 @@ const MonthCalendar = ({ view, selected, changeMonth, changeType }: Props) => {
           );
         })}
       </CalendarBody>
-    </>
+    </CalendarLayout>
   );
 };
 

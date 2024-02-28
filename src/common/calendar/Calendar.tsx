@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 
 import DateCalendar from "./date";
 import MonthCalendar from "./month";
-import { CalendarLayout } from "./layout";
 
 interface Props {
   selected: number[];
@@ -29,22 +27,16 @@ const Calendar = ({ selected, selectDate, toggleOpened }: Props) => {
     setCalendarType(type);
   };
 
-  return createPortal(
-    <CalendarLayout toggleOpened={toggleOpened}>
-      {calendarType === "date" ? (
-        <DateCalendar
-          view={view}
-          selected={selected}
-          changeDate={changeDate}
-          changeMonth={changeMonth}
-          changeType={changeType}
-        />
-      ) : (
-        <MonthCalendar view={view} selected={selected} changeMonth={changeMonth} changeType={changeType} />
-      )}
-    </CalendarLayout>,
-    document.body,
-    "calendar"
+  return calendarType === "date" ? (
+    <DateCalendar
+      view={view}
+      selected={selected}
+      changeDate={changeDate}
+      changeMonth={changeMonth}
+      changeType={changeType}
+    />
+  ) : (
+    <MonthCalendar view={view} changeMonth={changeMonth} changeType={changeType} />
   );
 };
 

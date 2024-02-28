@@ -1,26 +1,14 @@
-import { ReactNode } from "react";
+import CategoryHeadLayout from "./CategoryHeadLayout";
 import CategoryTitle from "./CategoryTitle";
 import BackButton from "./BackButton";
 
-interface Props {
-  children: ReactNode;
-}
-
-const CategoryHead = ({ children }: Props) => {
+const CategoryHead = () => {
   return (
-    <div
-      css={{
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
-      }}
-    >
-      {children}
-    </div>
+    <CategoryHeadLayout>
+      <CategoryTitle />
+      <BackButton />
+    </CategoryHeadLayout>
   );
 };
-
-CategoryHead.Title = CategoryTitle;
-CategoryHead.Back = BackButton;
 
 export default CategoryHead;

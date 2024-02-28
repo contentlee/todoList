@@ -1,4 +1,4 @@
-import { CONSTANT_STR } from "@utils/constant";
+import { CONSTANT_STR } from "../../helpers/constant";
 import { palette } from "@utils/palette";
 
 interface Props {

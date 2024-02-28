@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { useGetPlaces } from "@api/place";
-
-import { PageLayout } from "@components";
+import { ResPlace } from "@utils/types/place";
 
 import MapHeader from "./header";
-import MapBody from "./body";
-import MapList from "./list";
-import MapForm from "./form";
-
-import { Place, ResPlace } from "@utils/types/place";
+import Map from "@/common/map";
+import { PageLayout } from "@components";
 
 const UserMapPage = () => {
   const { data, refetch } = useGetPlaces();
@@ -31,23 +27,10 @@ const UserMapPage = () => {
         <MapHeader.Title />
         <MapHeader.Return />
       </MapHeader>
-      <MapBody>
-        <MapForm refetch={refetch} selectPlace={selectPlace}>
-          <MapForm.Title />
-          <MapForm.View places={places} selected={selected} selectPlace={selectPlace} />
-          <MapForm.Name name={selected?.name} />
-          <MapForm.Select places={places} selectPlace={selectPlace} />
-          <MapForm.Register />
-          <MapForm.Reset />
-        </MapForm>
-        <MapList>
-          <MapList.Title />
-          {!places && <MapList.Empty />}
-          {places.map((place) => {
-            return <MapList.Item key={place.id} place={place} selectPlace={selectPlace} />;
-          })}
-        </MapList>
-      </MapBody>
+      <Map>
+        <Map.Form places={places} selected={selected} selectPlace={selectPlace} refetch={refetch} />
+        <Map.List places={places} selectPlace={selectPlace} />
+      </Map>
     </PageLayout>
   );
 };
